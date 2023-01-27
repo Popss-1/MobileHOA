@@ -1,14 +1,15 @@
 package com.bigbrain.v1.models;
 
-import javax.persistence.*;
-
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
 @Entity
 public class Users {
 
 	@Id
-	@GeneratedValues(Strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int UserIdPK;
 	private String emailAddress;
 	private String firstName;
