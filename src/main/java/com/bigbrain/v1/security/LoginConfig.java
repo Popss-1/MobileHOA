@@ -18,6 +18,7 @@ import java.util.ResourceBundle;
 @Configuration
 public class LoginConfig {
 
+	//TODO handle logout
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http

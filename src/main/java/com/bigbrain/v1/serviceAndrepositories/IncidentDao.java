@@ -9,6 +9,8 @@ public interface IncidentDao {
 
     List<Incidents>findAll();
 
+    List<Incidents>findAllByID(int userIDFK);
+
     int deleteById(int incidentIDPK);
 
     int deleteByStatus(String incidentStatus);

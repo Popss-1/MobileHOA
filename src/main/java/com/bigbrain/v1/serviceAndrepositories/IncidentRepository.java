@@ -36,6 +36,17 @@ public class IncidentRepository implements IncidentDao{
     }
 
     @Override
+    public List<Incidents> findAllByID(int userIDFK) {
+        try{
+            return jdbc.query("SELECT IncidentIdPK,IncidentCategory, Description, UserIDFK, ReportedByPhoneNumber, IncidentStatus, Latitude, longitude, Title, IncidentDate FROM Incidents WHERE UserIDFK=?",
+                    new BeanPropertyRowMapper<Incidents>(Incidents.class));
+        }
+        catch(EmptyResultDataAccessException e){
+            return null;
+        }
+    }
+
+    @Override
     public int deleteById(int incidentIDPK) {
         try{
             return jdbc.update("DELETE FROM Incidents WHERE IncidentIdPK=?");
@@ -68,8 +79,8 @@ public class IncidentRepository implements IncidentDao{
     @Override
     public int updateById(Incidents incident, int incidentIDPK) {
         try{
-            return jdbc.update("UPDATE Incidents SET  IncidentCategory=?, Description=?, ReportedByPhoneNumber=?, IncidentStatus=?, Latitude=?, Longitude=?, Title=?, IncidentDate=? WHERE IncidentIdPK=? ",
-                    incident.getIncidentCategory(), incident.getDescription(), incident.getReportedByPhoneNumber(), incident.getIncidentStatus(), incident.getLatitude(), incident.getLongitude(), incident.getTitle(), incident.getIncidentDate());
+            return jdbc.update("UPDATE Incidents SET  IncidentCategory=?, Description=?, ReportedByPhoneNumber=?, IncidentStatus=?, Latitude=?, Longitude=?, Title=? WHERE IncidentIdPK=? ",
+                    incident.getIncidentCategory(), incident.getDescription(), incident.getReportedByPhoneNumber(), incident.getIncidentStatus(), incident.getLatitude(), incident.getLongitude(), incident.getTitle());
         }
         catch(EmptyResultDataAccessException e){
             return 0;

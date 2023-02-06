@@ -5,8 +5,6 @@ import com.bigbrain.v1.models.Incidents;
 import com.bigbrain.v1.models.Users;
 import com.bigbrain.v1.serviceAndrepositories.IncidentRepository;
 import com.bigbrain.v1.serviceAndrepositories.UsersRepository;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.maps.GeoApiContext;
 import com.google.maps.GeocodingApi;
 import com.google.maps.errors.ApiException;
@@ -74,9 +72,6 @@ public class IncidentController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        //System.out.println(gson.toJson(results[0].geometry.location.lat) + " , " + gson.toJson(results[0].geometry.location.lng));
-
         newIncident.setLatitude(results[0].geometry.location.lat);
         newIncident.setLongitude(results[0].geometry.location.lng);
 
@@ -104,6 +99,16 @@ public class IncidentController {
         return "incidentmap";
     }
 
+    @GetMapping("/userincidents/{email}")
+    public String showUserIncidents(@PathVariable(value = "email") String email, Model model){
+        return "userincidents";
+    }
+
+    //TODO delete incident
+
+    //TODO update incident
+
+    // Create static map URL
     private String generateStaticMap(List<Incidents> allIncidents){
         // Create static map
         StaticMap sm = new StaticMap(1000,1000, apiKey);

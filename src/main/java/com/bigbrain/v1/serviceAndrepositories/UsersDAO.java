@@ -13,8 +13,10 @@ public interface UsersDAO {
 	Users findByEmail(String email);
 
 	Users findById(int userIdPk);
+
 	
 	List<Users> findAll();
-	
-	List<Users> findAllRole(String role);
+
+
+	List<Users> findAllbYRole(String role);
 }

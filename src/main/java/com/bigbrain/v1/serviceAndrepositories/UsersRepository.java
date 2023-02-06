@@ -2,6 +2,7 @@ package com.bigbrain.v1.serviceAndrepositories;
 
 import java.util.List;
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -47,6 +48,10 @@ public class UsersRepository implements UsersDAO{
 		catch(EmptyResultDataAccessException e){
 			return null;
 		}
+		catch(DataAccessException e){
+			System.err.println(e);
+			return null;
+		}
 	}
 
 	@Override
@@ -59,17 +64,29 @@ public class UsersRepository implements UsersDAO{
 		catch(EmptyResultDataAccessException e){
 			return null;
 		}
+		catch(DataAccessException e){
+			System.err.println(e);
+			return null;
+		}
 	}
 
 	@Override
 	public List<Users> findAll() {
-		List<Users> users = jdbc.query("SELECT userIDPK, email, firstName, lastName, phoneNumber, subscriptionstatus, SubscriptionExpirationDate, Role FROM Users", new BeanPropertyRowMapper<Users>(Users.class));
-		return users;
+		try {
+			return jdbc.query("SELECT userIDPK, email, firstName, lastName, phoneNumber, subscriptionstatus, SubscriptionExpirationDate, Role FROM Users", new BeanPropertyRowMapper<Users>(Users.class));
+		}
+		catch(EmptyResultDataAccessException e){
+			return null;
+		}
+		catch(DataAccessException e){
+			System.err.println(e);
+			return null;
+		}
 	}
 
 	@Override
-	public List<Users> findAllRole(String role) {
-		List<Users> users = jdbc.query("SELECT * FROM Users WHERE role =?", new BeanPropertyRowMapper<Users>(Users.class));
+	public List<Users> findAllbYRole(String role) {
+		List<Users> users = jdbc.query("SELECT userIDPK, email, firstName, lastName, phoneNumber, subscriptionstatus, SubscriptionExpirationDate, Role FROM Users WHERE role =?", new BeanPropertyRowMapper<Users>(Users.class));
 		return users;
 	}
 
