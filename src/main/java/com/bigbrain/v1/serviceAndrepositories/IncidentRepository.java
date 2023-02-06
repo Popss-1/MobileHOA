@@ -1,6 +1,7 @@
 package com.bigbrain.v1.serviceAndrepositories;
 
 import com.bigbrain.v1.models.Incidents;
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -28,9 +29,13 @@ public class IncidentRepository implements IncidentDao{
     public List<Incidents> findAll() {
         try{
             return jdbc.query("SELECT IncidentIdPK,IncidentCategory, Description, UserIDFK, ReportedByPhoneNumber, IncidentStatus, Latitude, longitude, Title, IncidentDate FROM Incidents",
-                    new BeanPropertyRowMapper<Incidents>(Incidents.class));
+                    new BeanPropertyRowMapper<>(Incidents.class));
         }
         catch(EmptyResultDataAccessException e){
+            return null;
+        }
+        catch(DataAccessException e){
+            System.err.println(e);
             return null;
         }
     }
@@ -39,9 +44,13 @@ public class IncidentRepository implements IncidentDao{
     public List<Incidents> findAllByID(int userIDFK) {
         try{
             return jdbc.query("SELECT IncidentIdPK,IncidentCategory, Description, UserIDFK, ReportedByPhoneNumber, IncidentStatus, Latitude, longitude, Title, IncidentDate FROM Incidents WHERE UserIDFK=?",
-                    new BeanPropertyRowMapper<Incidents>(Incidents.class));
+                    new BeanPropertyRowMapper<>(Incidents.class));
         }
         catch(EmptyResultDataAccessException e){
+            return null;
+        }
+        catch(DataAccessException e){
+            System.err.println(e);
             return null;
         }
     }
@@ -54,6 +63,10 @@ public class IncidentRepository implements IncidentDao{
         catch(EmptyResultDataAccessException e){
             return 0;
         }
+        catch(DataAccessException e){
+            System.err.println(e);
+            return 0;
+        }
     }
 
     @Override
@@ -62,6 +75,10 @@ public class IncidentRepository implements IncidentDao{
             return jdbc.update("DELETE FROM Incidents WHERE IncidentStatus=?");
         }
         catch(EmptyResultDataAccessException e){
+            return 0;
+        }
+        catch(DataAccessException e){
+            System.err.println(e);
             return 0;
         }
     }
@@ -74,6 +91,10 @@ public class IncidentRepository implements IncidentDao{
         catch(EmptyResultDataAccessException e){
             return 0;
         }
+        catch(DataAccessException e){
+            System.err.println(e);
+            return 0;
+        }
     }
 
     @Override
@@ -83,6 +104,10 @@ public class IncidentRepository implements IncidentDao{
                     incident.getIncidentCategory(), incident.getDescription(), incident.getReportedByPhoneNumber(), incident.getIncidentStatus(), incident.getLatitude(), incident.getLongitude(), incident.getTitle());
         }
         catch(EmptyResultDataAccessException e){
+            return 0;
+        }
+        catch(DataAccessException e){
+            System.err.println(e);
             return 0;
         }
     }

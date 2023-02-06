@@ -1,6 +1,7 @@
 package com.bigbrain.v1.serviceAndrepositories;
 
 import com.bigbrain.v1.models.Addresses;
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -42,6 +43,10 @@ public class AddressRepository implements  AddressDao{
                     new BeanPropertyRowMapper(Addresses.class));
         }
         catch(EmptyResultDataAccessException e){
+            return null;
+        }
+        catch(DataAccessException e){
+            System.err.println(e);
             return null;
         }
     }
