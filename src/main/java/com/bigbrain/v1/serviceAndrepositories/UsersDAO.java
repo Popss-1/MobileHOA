@@ -8,9 +8,11 @@ public interface UsersDAO {
 	
 	int save(Users user);
 	
-	int update(Users users);
+	int update(Users users, int userIDPK);
 	
 	Users findByEmail(String email);
+
+	Users findById(int userIdPk);
 	
 	List<Users> findAll();
 	

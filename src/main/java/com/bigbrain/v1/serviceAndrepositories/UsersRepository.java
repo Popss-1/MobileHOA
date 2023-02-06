@@ -2,7 +2,7 @@ package com.bigbrain.v1.serviceAndrepositories;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -27,25 +27,43 @@ public class UsersRepository implements UsersDAO{
 
 	@Override
 	public int save(Users user) {
-		return jdbc.update("INSERT INTO users (userIdPk, EmailAddress, FirstName, LastName, Password, SubscriptionStatus, SubscriptionExpirationDate, Role) VALUES(?,?,?,?,?,?,?)",
-				user.getUserIdPK(), user.getEmailAddress(), user.getFirstName(), user.getLastName(), user.getSubscriptionStatus(), user.getSubscriptionExpiration(), user.getRole()) ;
+		return jdbc.update("INSERT INTO users (Email, FirstName, LastName, SubscriptionStatus, SubscriptionExpirationDate, Role, PhoneNumber) VALUES(?,?,?,?,?,?,?)",
+				user.getEmail(), user.getFirstName(), user.getLastName(), user.getSubscriptionStatus(), user.getSubscriptionExpirationDate(), user.getRole(), user.getPhoneNumber()) ;
 	}
 
 	@Override
-	public int update(Users user) {
-		return jdbc.update("UPDATE users SET emailAddress =?, subscriptionStatus =?, SubscriptionExpirationDate=?, Role=? WHERE userIdPK",
-				user.getEmailAddress(), user.getSubscriptionStatus(), user.getSubscriptionExpiration(), user.getRole(), user.getUserIdPK()) ;
+	public int update(Users user, int userIDPK) {
+		return jdbc.update("UPDATE users SET email =?, subscriptionStatus =?, SubscriptionExpirationDate=?, PhoneNumber =? WHERE userIDPK=?",
+				new Object[] { user.getEmail(), user.getSubscriptionStatus(), user.getSubscriptionExpirationDate(), user.getPhoneNumber(), userIDPK}) ;
 	}
 
 	@Override
 	public Users findByEmail(String email) {
-		Users user = jdbc.queryForObject("SELECT TOP 1 FROM Users WHERE email =?", BeanPropertyRowMapper.newInstance(Users.class), email);
-		return user;
+		try {
+			Users user = (Users) jdbc.queryForObject("SELECT UserIdPK, email, firstName, lastName, phoneNumber, subscriptionstatus, SubscriptionExpirationDate, Role FROM Users WHERE email =?", new Object[]{email}, new BeanPropertyRowMapper(Users.class));
+			return user;
+		}
+		// No user found
+		catch(EmptyResultDataAccessException e){
+			return null;
+		}
+	}
+
+	@Override
+	public Users findById(int userIdPk) {
+		try {
+			Users user = (Users) jdbc.queryForObject("SELECT UserIdPK, email, firstName, lastName, phoneNumber, subscriptionstatus, SubscriptionExpirationDate, Role FROM Users WHERE UserIDPk =?", new Object[]{userIdPk}, new BeanPropertyRowMapper(Users.class));
+			return user;
+		}
+		// No user found
+		catch(EmptyResultDataAccessException e){
+			return null;
+		}
 	}
 
 	@Override
 	public List<Users> findAll() {
-		List<Users> users = jdbc.query("SELECT * FROM Users", new BeanPropertyRowMapper<Users>(Users.class));
+		List<Users> users = jdbc.query("SELECT userIDPK, email, firstName, lastName, phoneNumber, subscriptionstatus, SubscriptionExpirationDate, Role FROM Users", new BeanPropertyRowMapper<Users>(Users.class));
 		return users;
 	}
 

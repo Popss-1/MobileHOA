@@ -2,11 +2,6 @@ package com.bigbrain.v1.models;
 
 import java.util.Date;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.SequenceGenerator;
-import jakarta.validation.constraints.NotNull;
-
 
 public class Requests {
 
@@ -48,13 +43,13 @@ public class Requests {
 
 	private String status;
 
-	private Address address;
+	private Addresses address;
 
-	public Address getAddress() {
+	public Addresses getAddress() {
 		return address;
 	}
 
-	public void setAddress(Address address) {
+	public void setAddress(Addresses address) {
 		this.address = address;
 	}
 	

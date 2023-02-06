@@ -1,0 +1,31 @@
+<div th:replace="~{fragments/head :: head}"></div>
+<title>Title</title>
+
+<body>
+<div th:replace="~{fragments/navbar :: navigation}"></div>
+<img th:src="@{${staticMapUrl}}"/>
+<h2>List of incidents</h2>
+<div th:if="${ not#lists.isEmpty(allIncidents)}">
+    <table>
+        <tr>
+            <th>Label</th>
+            <th>Incident category</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Status</th>
+            <th>Date</th>
+        </tr>
+        <tr th:each="incident : ${allIncidents}">
+            <td th:text="${incident.incidentIDPK}"></td>
+            <td th:text="${incident.incidentCategory}"></td>
+            <td th:text="${incident.title}"></td>
+            <td th:text="${incident.description}"></td>
+            <td th:text="${incident.incidentStatus}"></td>
+            <td th:text="${incident.incidentDate}"></td>
+        </tr>
+        </table>
+</div>
+
+<a class="btn" th:href="@{/incidentform/{email}(email=${user.email})}">Submit incident</a>
+</body>
+</html>

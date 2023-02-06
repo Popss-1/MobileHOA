@@ -1,0 +1,15 @@
+<div th:replace="fragments/head :: head"></div>
+<title>Title</title>
+
+<body>
+<div th:replace="fragments/navbar :: navigation"></div>
+
+  <span>First Name: </span><a th:text="${user.firstName}" ></a>
+  <span>Last Name: </span><a th:text="${user.lastName}" ></a>
+  <span>Last Name: </span><a th:text="${user.email}" ></a>
+  <span>Subscription status: </span><a th:text="${user.subscriptionStatus}" ></a>
+  <span>Subscription expiration date: </span><a th:text="${user.subscriptionExpirationDate}" ></a>
+  <span>Phone number </span><a th:text="${user.phoneNumber}" ></a>
+  <a class="btn" th:href="@{/profile/edit/{email}(email=${user.email})}" >Edit profile</a>
+</body>
+</html>

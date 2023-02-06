@@ -11,7 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.validation.constraints.NotNull;
 
-
+// spring batch generate every month
 public class Bills {
 	
 

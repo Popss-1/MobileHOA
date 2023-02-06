@@ -1,0 +1,60 @@
+<div th:replace="~{fragments/head :: head}"></div>
+<title>Title</title>
+
+<body>
+<div th:replace="~{fragments/navbar :: navigation}"></div>
+<h2>Incident Form</h2>
+<form action="#" th:action="@{/incidentform}" method="post">
+
+  <div class = "row">
+    <div class="col-sm-6 form-group">
+      <label >Incident status: </label> <select th:field = "*{newIncident.incidentStatus}">
+      <option th:each="incidentStatus : ${T(com.bigbrain.v1.models.Incidents.Statues).values() }"
+                                            th:value="*{incidentStatus.toString()}"
+                                            th:text="${incidentStatus}"><br/>
+      </option>
+    </select>
+
+      <label >Incident category: </label> <Input type="text"
+                                     th:field="*{newIncident.incidentCategory}"  th:required="required" class="form-control" />
+
+      <label >Title: </label> <Input type="text"
+                                          th:field="*{newIncident.title}"  th:required="required" class="form-control" />
+      <label >Description: </label> <Input type="text" th:field="*{newIncident.description}"   class="form-control" />
+    </div>
+  </div>
+  <div class = "row">
+    <div class="col-sm-6 form-group">
+      <label>Address Line 1: </label> <Input type="text"
+                                             th:field="*{incidentAddress.addressLine1}" th:required="required" class="form-control" />
+    </div>
+  </div>
+
+  <div class = "row">
+    <div class="col-sm-6 form-group">
+      <label>City: </label> <Input type="text" th:field="*{incidentAddress.city}"
+                                   th:required="required" class="form-control" />
+      <label>State: </label> <select th:field = "*{incidentAddress.stateCode}">
+      <option th:each="stateCode : ${T(com.bigbrain.v1.models.enums.StateCodes).values() }"
+              th:value="*{stateCode.toString()}"
+              th:text="${stateCode}">
+      </option>
+    </select>
+    </div>
+  </div>
+
+  <div class = "row">
+    <div class="col-sm-6 form-group">
+      <label>Zipcode: </label> <Input type="number" th:field="*{incidentAddress.zipCode}"
+                                  th:required="required" class="form-control"/>
+      <label>Phone number: </label>
+      <Input type="text" th:value="*{newIncident.reportedByPhoneNumber}" th:field="*{newIncident.reportedByPhoneNumber}" th:required="required" class="form-control"/>
+
+      <input type="hidden" th:field="*{newIncident.userIDFK}" >
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-primary btn-block mt-3">Submit incident</button>
+</form>
+</body>
+</html>

@@ -1,19 +1,11 @@
 package com.bigbrain.v1.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.SequenceGenerator;
-import jakarta.validation.constraints.NotNull;
-import org.apache.coyote.Request;
-
 import java.util.List;
 
 
-public class Address {
+public class Addresses {
 
-	private String addressIDPK;
+	private int addressIDPK;
 
 	private int userIDFK;
 
@@ -32,16 +24,32 @@ public class Address {
 		return requests;
 	}
 
+	public Addresses(){
+
+	}
+
+	public Addresses(int userIDFK){
+		this.userIDFK = userIDFK;
+	}
+	public Addresses(int userIDFK, String addressLine1, String addressLine2, String city, String stateCode, int zipCode) {
+		this.userIDFK = userIDFK;
+		this.addressLine1 = addressLine1;
+		this.addressLine2 = addressLine2;
+		this.city = city;
+		this.stateCode = stateCode;
+		this.zipCode = zipCode;
+	}
+
+	public void setAddressIDPK(int addressIDPK) {
+		this.addressIDPK = addressIDPK;
+	}
+
 	public void addRequests(Requests request) {
 		requests.add(request);
 	}
 
-	public String getAddressIDPK() {
+	public int getAddressIDPK() {
 		return addressIDPK;
-	}
-
-	public void setAddressIDPK(String addressIDPK) {
-		this.addressIDPK = addressIDPK;
 	}
 
 	public int getUserIDFK() {

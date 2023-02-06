@@ -1,11 +1,6 @@
 package com.bigbrain.v1.models;
 
-import java.util.Date;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.validation.constraints.NotNull;
-import jakarta.persistence.SequenceGenerator;
+import java.sql.Date;
 
 
 public class Incidents {
@@ -22,12 +17,13 @@ public class Incidents {
 	private String incidentCategory;
 
 	private String incidentStatus;
+	private String description;
 
 	private int userIDFK;
 
 	private String reportedByPhoneNumber;
 
-	private double longtitude;
+	private double longitude;
 
 	private double latitude;
 
@@ -35,12 +31,21 @@ public class Incidents {
 
 	private Date incidentDate;
 
-	public Date getIncidentDate() {
-		return incidentDate;
+
+	public Incidents(String incidentCategory, String incidentStatus, String description, int userIDFK, String reportedByPhoneNumber, double longitude, double latitude, String title, Date incidentDate) {
+		this.incidentCategory = incidentCategory;
+		this.incidentStatus = incidentStatus;
+		this.description = description;
+		this.userIDFK = userIDFK;
+		this.reportedByPhoneNumber = reportedByPhoneNumber;
+		this.longitude = longitude;
+		this.latitude = latitude;
+		this.title = title;
+		this.incidentDate = incidentDate;
 	}
 
-	public void setIncidentDate(Date incidentDate) {
-		this.incidentDate = incidentDate;
+	public Incidents(){
+
 	}
 
 	public int getIncidentIDPK() {
@@ -67,6 +72,14 @@ public class Incidents {
 		this.incidentStatus = incidentStatus;
 	}
 
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 	public int getUserIDFK() {
 		return userIDFK;
 	}
@@ -83,12 +96,12 @@ public class Incidents {
 		this.reportedByPhoneNumber = reportedByPhoneNumber;
 	}
 
-	public double getLongtitude() {
-		return longtitude;
+	public double getLongitude() {
+		return longitude;
 	}
 
-	public void setLongtitude(double longtitude) {
-		this.longtitude = longtitude;
+	public void setLongitude(double longitude) {
+		this.longitude = longitude;
 	}
 
 	public double getLatitude() {
@@ -107,12 +120,27 @@ public class Incidents {
 		this.title = title;
 	}
 
-	@Override
-	public String toString() {
-		return "Incidents [incidentIDPK=" + incidentIDPK + ", incidentCategory=" + incidentCategory
-				+ ", incidentStatus=" + incidentStatus + ", userIDFK=" + userIDFK + ", reportedByPhoneNumber="
-				+ reportedByPhoneNumber + ", longtitude=" + longtitude + ", latitude=" + latitude + ", title=" + title
-				+ ", incidentDate=" + incidentDate + "]";
+	public Date getIncidentDate() {
+		return incidentDate;
 	}
 
+	public void setIncidentDate(Date incidentDate) {
+		this.incidentDate = incidentDate;
+	}
+
+	@Override
+	public String toString() {
+		return "Incidents{" +
+				"incidentIDPK=" + incidentIDPK +
+				", incidentCategory='" + incidentCategory + '\'' +
+				", incidentStatus='" + incidentStatus + '\'' +
+				", description='" + description + '\'' +
+				", userIDFK=" + userIDFK +
+				", reportedByPhoneNumber='" + reportedByPhoneNumber + '\'' +
+				", longitude=" + longitude +
+				", latitude=" + latitude +
+				", title='" + title + '\'' +
+				", incidentDate=" + incidentDate +
+				'}';
+	}
 }

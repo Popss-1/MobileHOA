@@ -6,29 +6,42 @@ import java.util.List;
 // datatype in sql server vs in model
 public class Users {
 
+    // handled by sql server
     private int UserIdPK;
-    private String emailAddress;
+    private String email;
     private String firstName;
     private String lastName;
-    private String password;
     private String role;
+    private String phoneNumber;
     private String subscriptionStatus;
     private Date subscriptionExpirationDate;
     private List<Bills> bills;
-    private Address address;
+    private Addresses address;
 	private List<Incidents> incidents;
 	private List<Requests> requests;
 	private List<UsersAnnouncements> usersAnnouncements;
 
-    public Users(int userIdPK, String emailAddress, String firstName, String lastName, String password, String role, String subscriptionStatus, Address address) {
-        UserIdPK = userIdPK;
-        this.emailAddress = emailAddress;
+    public Users(){
+
+    }
+
+
+
+    public Users(String email, String firstName, String lastName, String phoneNumber, Roles role, SubscriptionStatues subscriptionStatus, Addresses address) {
+        this.email = email;
+        this.phoneNumber = phoneNumber;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.password = password;
-        this.role = role;
-        this.subscriptionStatus = subscriptionStatus;
+        this.role = role.toString();
+        this.subscriptionStatus = subscriptionStatus.toString();
         this.address = address;
+    }
+
+    // New user registration
+    public Users(String email, String firstName, String lastName){
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
     public List<Requests> getRequests() {
@@ -72,28 +85,27 @@ public class Users {
         this.bills.add(bill);
     }
 
-    public Address getAddress() {
+    public Addresses getAddress() {
         return address;
     }
 
-    public void setAddress(Address address) {
+    public void setAddress(Addresses address) {
         this.address = address;
-    }
-
-    public int getUserIdPK() {
-        return UserIdPK;
     }
 
     public void setUserIdPK(int userIdPK) {
         UserIdPK = userIdPK;
     }
-
-    public String getEmailAddress() {
-        return emailAddress;
+    public int getUserIdPK() {
+        return UserIdPK;
     }
 
-    public void setEmailAddress(String emailAddress) {
-        this.emailAddress = emailAddress;
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getFirstName() {
@@ -112,20 +124,13 @@ public class Users {
         this.lastName = lastName;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String getRole() {
         return role;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setRole(Roles role) {
+
+        this.role = role.toString();
     }
 
     public String getSubscriptionStatus() {
@@ -136,15 +141,8 @@ public class Users {
         this.subscriptionStatus = subscriptionStatus;
     }
 
-    public Date getSubscriptionExpiration() {
-        return subscriptionExpirationDate;
-    }
 
-    public void setSubscriptionExpiration(Date subscriptionExpiration) {
-        this.subscriptionExpirationDate = subscriptionExpiration;
-    }
-
-    public enum roles {
+    public enum Roles {
         Admin,
         Homeowner,
         Maintainence,
@@ -152,9 +150,52 @@ public class Users {
     }
 
     public enum SubscriptionStatues {
+        Pending,
         Valid,
         Expired,
         Not_applicable
     }
 
+    @Override
+    public String toString() {
+        return "Users{" +
+                "UserIdPK=" + UserIdPK +
+                ", email='" + email + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", role='" + role + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", subscriptionStatus='" + subscriptionStatus + '\'' +
+                ", subscriptionExpirationDate=" + subscriptionExpirationDate +
+                ", bills=" + bills +
+                ", address=" + address +
+                ", incidents=" + incidents +
+                ", requests=" + requests +
+                ", usersAnnouncements=" + usersAnnouncements +
+                '}';
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public void setBills(List<Bills> bills) {
+        this.bills = bills;
+    }
+
+    public void setIncidents(List<Incidents> incidents) {
+        this.incidents = incidents;
+    }
+
+    public void setRequests(List<Requests> requests) {
+        this.requests = requests;
+    }
+
+    public void setUsersAnnouncements(List<UsersAnnouncements> usersAnnouncements) {
+        this.usersAnnouncements = usersAnnouncements;
+    }
 }

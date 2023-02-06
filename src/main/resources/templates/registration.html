@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container">
+    <h2>Registration</h2>
+
+    <form action="#" th:action="@{/registration}" method="post">
+
+        <div class = "row">
+            <div class="col-sm-6 form-group">
+                <label > First name: </label> <Input type="text" th:value = "*{newUser.firstName}" th:field="*{newUser.firstName}" th:required="required" class="form-control" />
+                <label > Last name: </label> <Input type="text"
+                                                    th:value = "*{newUser.lastName}" th:field="*{newUser.lastName}" th:required="required" class="form-control" />
+                <label > Email: </label> <Input type="text" th:field="*{user.email}" th:readonly = "true"  class="form-control" />
+            </div>
+        </div>
+        <div class = "row">
+            <div class="col-sm-6 form-group">
+                <label>Address Line 1: </label> <Input type="text"
+                                                  th:field="*{newAddress.addressLine1}" th:required="required" class="form-control" />
+                <label>Address Line 2: </label> <Input type="text"
+                                                         th:field="*{newAddress.addressLine2}" class="form-control" />
+            </div>
+        </div>
+
+        <div class = "row">
+            <div class="col-sm-6 form-group">
+                <label>City: </label> <Input type="text" th:field="*{newAddress.city}"
+                                              th:required="required" class="form-control" />
+                <label>State: </label> <select th:field = "*{newAddress.stateCode}">
+                <option th:each="stateCode : ${T(com.bigbrain.v1.models.enums.StateCodes).values() }"
+                        th:value="*{stateCode.toString()}"
+                        th:text="${stateCode}">
+                </option>
+            </select>
+            </div>
+        </div>
+
+        <div class = "row">
+            <div class="col-sm-6 form-group">
+                <label>Zip: </label> <Input type="number" th:field="*{newAddress.zipCode}"
+                                                th:required="required" class="form-control"/>
+                <label>Phone number: </label>
+                <Input type="text" th:field="*{newUser.phoneNumber}" th:required="required" class="form-control"/>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block mt-3">Register</button>
+    </form>
+</div>
+</body>
+</html>

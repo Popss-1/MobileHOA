@@ -12,13 +12,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class LoginController {
 
-//	/*
-//	 * Show index page after logged in
-//	 * Principal - current user in session
-//	 */
-//	@GetMapping(value = "/login")
-//	public Principal welcomePage(Principal principal) {
-//		return principal;
-//	}
+	/*
+	 * Show index page after logged in
+	 * Principal - current user in session
+	 */
+
 }
 

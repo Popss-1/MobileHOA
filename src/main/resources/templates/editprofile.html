@@ -1,0 +1,56 @@
+<div th:replace="~{fragments/head :: head}"></div>
+<title>Title</title>
+
+<body>
+<div th:replace="~{fragments/navbar :: navigation}"></div>
+<h2>Edit profile</h2>
+
+<form action="#" th:action="@{/profile/edit}" method="post">
+
+  <div class = "row">
+    <div class="col-sm-6 form-group">
+      <label > First name: </label> <Input type="text" th:value="*{user.firstName}" th:field="*{user.firstName}" th:readonly = "true" th:required="required" class="form-control" />
+      <label > Last name: </label> <Input type="text"
+                                          th:value="*{user.lastName}" th:field="*{user.lastName}" th:readonly = "true" th:required="required" class="form-control" />
+      <label > Email: </label> <Input type="text" th:field="*{user.email}" th:readonly = "true"  class="form-control" />
+    </div>
+  </div>
+  <div class = "row">
+    <div class="col-sm-6 form-group">
+      <label>Address Line 1: </label> <Input type="text"
+                                             th:field="*{userAddress.addressLine1}" th:required="required" class="form-control" />
+      <label>Address Line 2: </label> <Input type="text"
+                                             th:field="*{userAddress.addressLine2}" class="form-control" />
+    </div>
+  </div>
+
+  <div class = "row">
+    <div class="col-sm-6 form-group">
+      <label>City: </label> <Input type="text" th:field="*{userAddress.city}"
+                                   th:required="required" class="form-control" />
+      <label>State: </label> <select th:field = "*{userAddress.stateCode}">
+      <option th:each="stateCode : ${T(com.bigbrain.v1.models.enums.StateCodes).values() }"
+              th:value="*{stateCode.toString()}"
+              th:text="${stateCode}">
+      </option>
+    </select>
+    </div>
+  </div>
+
+  <div class = "row">
+    <div class="col-sm-6 form-group">
+      <label>Zip: </label> <Input type="number" th:field="*{userAddress.zipCode}"
+                                  th:required="required" class="form-control"/>
+      <label>Phone number: </label>
+      <Input type="text" th:field="*{user.phoneNumber}" th:required="required" class="form-control"/>
+
+      <input type="hidden" th:field="*{user.userIdPK}" >
+      <input type="hidden" th:field="*{userAddress.addressIDPK}">
+      <input type="hidden" th:field="*{userAddress.userIDFK}" >
+      <input type="hidden" th:field="*{user.subscriptionStatus}" >
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-primary btn-block mt-3">Update</button>
+</form>
+</body>

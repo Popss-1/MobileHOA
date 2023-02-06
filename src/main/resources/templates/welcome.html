@@ -1,10 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+<div th:replace="~{fragments/head :: head}"></div>
+<title>Title</title>
+
 <body>
+<div th:replace="~{fragments/navbar :: navigation}"></div>
+<!--/* todo: welcome{name} and show announcement */-->
+    <span>Welcome: </span><span th:text = "${user.firstName}"></span><br>
   <h1>You're google authenticated</h1>
 </body>
-</html>
