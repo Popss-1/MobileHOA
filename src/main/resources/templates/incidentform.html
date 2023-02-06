@@ -1,8 +1,11 @@
-<div th:replace="~{fragments/head :: head}"></div>
-<title>Title</title>
+<!DOCTYPE html>
+<html lang="en">
 
+<head th:insert="fragments/head">
+  <title>Title</title>
+</head>
 <body>
-<div th:replace="~{fragments/navbar :: navigation}"></div>
+<div th:insert="fragments/navbar"></div>
 <h2>Incident Form</h2>
 <form action="#" th:action="@{/incidentform}" method="post">
 
