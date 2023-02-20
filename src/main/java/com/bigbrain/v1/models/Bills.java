@@ -21,8 +21,17 @@ public class Bills {
 
 	private Date billDate;
 
-	private BigInteger amountDue;
+	private int amountDue;
 	private List<Payments> payments;
+
+	public Bills(){
+
+	}
+	public Bills(int userIDFK, Date billDate, int amountDue) {
+		this.userIDFK = userIDFK;
+		this.billDate = billDate;
+		this.amountDue = amountDue;
+	}
 
 	public List<Payments> getPayments() {
 		return payments;
@@ -54,11 +63,12 @@ public class Bills {
 	public void setBillDate(Date billDate) {
 		this.billDate = billDate;
 	}
-	public BigInteger getAmountDue() {
+
+	public int getAmountDue() {
 		return amountDue;
 	}
-	public void setAmountDue(BigInteger amountDue) {
+
+	public void setAmountDue(int amountDue) {
 		this.amountDue = amountDue;
 	}
-	
 }

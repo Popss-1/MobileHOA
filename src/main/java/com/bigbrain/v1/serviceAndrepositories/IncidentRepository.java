@@ -1,7 +1,6 @@
 package com.bigbrain.v1.serviceAndrepositories;
 
 import com.bigbrain.v1.models.Incidents;
-import com.bigbrain.v1.models.Users;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;

@@ -1,10 +1,6 @@
-package com.bigbrain.v1.security;
-
-import static org.springframework.security.config.Customizer.withDefaults;
+package com.bigbrain.v1.config;
 
 
-import com.bigbrain.v1.serviceAndrepositories.UsersRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -13,10 +9,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 
 import javax.sql.DataSource;
-import java.util.ResourceBundle;
 
 @Configuration
-public class LoginConfig {
+public class AppConfig {
 
 	//TODO handle logout
 	@Bean
@@ -33,7 +28,7 @@ public class LoginConfig {
 			//	.successHandler(); // success method to redirect to welcome.html and oauth2 info to principal
 //				.and()
 //				.logout()// remove metadata and logs out
-//				.logoutSuccessUrl("/").permitAll()// go to / after logout and everyone can access it
+//				.logoutSuccessUrl("/").permitAll()//` go to / after logout and everyone can access it
 //				.and();
 //				.failureURL("/index");  // redirect url after login failure
 
@@ -43,9 +38,9 @@ public class LoginConfig {
 	public DataSource getDatasource() {
 		DriverManagerDataSource datasource = new DriverManagerDataSource();
 		datasource.setDriverClassName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-		datasource.setUrl("jdbc:sqlserver://localhost:1433;database=CapstoneDatabase;encrypt=true;trustServerCertificate=true;");
-		datasource.setUsername("jyj123");
-		datasource.setPassword("jpoo1234");
+		datasource.setUrl("jdbc:sqlserver://localhost:1433;database=CapstoneDatabase;encrypt=true;trustServerCertificate=true;integratedSecurity=true");
+//		datasource.setUsername("jyj123");
+//		datasource.setPassword("jpoo1234");
 		return datasource;
 	}
 

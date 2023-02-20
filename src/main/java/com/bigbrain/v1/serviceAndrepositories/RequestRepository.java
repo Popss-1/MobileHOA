@@ -1,6 +1,5 @@
 package com.bigbrain.v1.serviceAndrepositories;
 
-import com.bigbrain.v1.models.Incidents;
 import com.bigbrain.v1.models.Requests;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
