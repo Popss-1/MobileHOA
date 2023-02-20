@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:insert="fragments/head">
+  <title>Title</title>
+</head>
+<body>
+<div th:insert="fragments/navbar"></div>
+<h2>Request update form</h2>
+<form th:action="@{/updaterequest}" method="POST">
+
+  <div class = "row">
+    <div class="col-sm-6 form-group">
+      <label >Priority: </label>
+      <select th:field = "*{requestToUpdate.priority}">
+        <option th:each="priority : ${T(com.bigbrain.v1.models.Requests.Priorities).values() }"
+                th:value="*{priority.toString()}"
+                th:text="${priority}"><br/>
+        </option>
+      </select>
+
+      <label >Title: </label> <Input type="text"
+                                     th:field="*{requestToUpdate.title}"  th:required="required" class="form-control" />
+      <label >Description: </label> <Input type="text" th:field="*{requestToUpdate.description}"   class="form-control" />
+    </div>
+  </div>
+
+  <input type="hidden" th:field="*{requestToUpdate.requestUserIDFK}" >
+  <input type="hidden" th:field="*{requestToUpdate.status}" >
+  <input type="hidden" th:field="*{requestToUpdate.addressIDFK}" >
+  <input type="hidden" th:field="*{requestToUpdate.assignedUserIDMTMFK}" >
+  <input type="hidden" th:field="*{requestToUpdate.requestIDPK}" >
+
+  <button type="submit" class="btn btn-primary btn-block mt-3">Submit update</button>
+</form>
+</body>
+</html>

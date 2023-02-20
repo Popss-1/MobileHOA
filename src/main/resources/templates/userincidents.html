@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:insert="fragments/head">
+    <title>Title</title>
+</head>
+<body>
+<div th:insert="fragments/navbar"></div>
+<h2>List of incidents</h2>
+<div th:if="${ not#lists.isEmpty(userIncidents)}">
+    <table>
+        <tr>
+            <th>Label</th>
+            <th>Incident category</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Status</th>
+            <th>Date</th>
+            <th>Options</th>
+        </tr>
+        <tr th:each="incident : ${userIncidents}">
+
+            <td th:text="${incident.incidentIDPK}"></td>
+            <td th:text="${incident.incidentCategory}"></td>
+            <td th:text="${incident.title}"></td>
+            <td th:text="${incident.description}"></td>
+            <td th:text="${incident.incidentStatus}"></td>
+            <td th:text="${incident.incidentDate}"></td>
+            <td>
+                <a th:href="@{/deleteincidents/{incidentIDPK}(incidentIDPK=${incident.incidentIDPK})}">
+                    <button type="submit" >Delete</button>
+                </a>
+                <a th:href="@{/updateincident/{incidentIDPK}(incidentIDPK=${incident.incidentIDPK})}">
+                    <button type="submit" >Edit</button>
+                </a>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

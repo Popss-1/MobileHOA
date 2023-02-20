@@ -3,10 +3,27 @@
 
 <head th:insert="fragments/head">
     <title>Title</title>
+<!--    <script type="module" src="./incidentmap.js"></script>-->
 </head>
 <body>
 <div th:insert="fragments/navbar"></div>
-<img th:src="@{${staticMapUrl}}"/>
+
+
+<div id="map" style="width:600px; height: 400px;"></div>
+
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_yaxjGDKLtw8qlGU1FsVTafhZwyYT2PI&callback=Function.prototype"></script>
+
+
+<script>
+    // initialize map
+    const map_parameters = { center: {lat: 40.210108, lng: -76.775418}, zoom: 17 };
+    const map = new google.maps.Map(document.getElementById('map'), map_parameters);
+    let markers = [];
+    let marker
+    let marked
+</script>
+
 <h2>List of incidents</h2>
 <div th:if="${ not#lists.isEmpty(allIncidents)}">
     <table>
@@ -19,6 +36,39 @@
             <th>Date</th>
         </tr>
         <tr th:each="incident : ${allIncidents}">
+
+            <script>
+                markers.push({
+                    incidentIDPK: [[${incident.incidentIDPK}]],
+                    latitude: [[${incident.latitude}]],
+                    longitude: [[${incident.longitude}]],
+                    title: "[[${incident.title}]]",
+                    description: "[[${incident.description}]]"
+                });
+               marker = markers[markers.length-1]
+                console.log(marker);
+                    marked = new google.maps.Marker({
+                        position: {lat: marker.latitude, lng: marker.longitude},
+                        map: map,
+                        label: {
+                            color: '#000',
+                            fontSize: '12px',
+                            fontWeight: '600',
+                            text: marker.incidentIDPK.toString()
+                        }
+                    });
+
+
+                marked.addListener('click', function() {
+                    let infowindow = new google.maps.InfoWindow({
+                        content: marker.title + '\n' + marker.description
+                    });
+                    infowindow.open(map, marked);
+                });
+
+            </script>
+
+
             <td th:text="${incident.incidentIDPK}"></td>
             <td th:text="${incident.incidentCategory}"></td>
             <td th:text="${incident.title}"></td>
@@ -26,9 +76,10 @@
             <td th:text="${incident.incidentStatus}"></td>
             <td th:text="${incident.incidentDate}"></td>
         </tr>
-        </table>
+    </table>
 </div>
 
 <a class="btn" th:href="@{/incidentform/{email}(email=${user.email})}">Submit incident</a>
+<a class="btn" th:href="@{/userincidents/{email}(email=${user.email})}">My incidents</a>
 </body>
 </html>

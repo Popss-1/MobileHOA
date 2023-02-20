@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:insert="fragments/head">
+  <title>Title</title>
+</head>
+<body>
+<div th:insert="fragments/navbar"></div>
+<h2>Your requests</h2>
+<div th:if="${ not#lists.isEmpty(allUserRequests)}">
+  <table>
+    <tr>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Priority</th>
+      <th>Status</th>
+      <th>Request date</th>
+      <th>Assigned MTM</th>
+    </tr>
+    <tr th:each="request : ${allUserRequests}">
+
+      <td th:text="${request.title}"></td>
+      <td th:text="${request.description}"></td>
+      <td th:text="${request.priority}"></td>
+      <td th:text="${request.status}"></td>
+      <td th:text="${request.requestDate}"></td>
+
+      <td>
+        <a th:href="@{/deleterequest/{requestIDPK}(requestIDPK=${request.requestIDPK})}">
+          <button type="submit" >Delete</button>
+        </a>
+        <a th:href="@{/updaterequest/{requestIDPK}(requestIDPK=${request.requestIDPK})}">
+          <button type="submit" >Edit</button>
+        </a>
+    </tr>
+  </table>
+</div>
+
+<a class="btn" th:href="@{/requestform/{email}(email=${user.email})}">New request</a>
+</body>
+</html>

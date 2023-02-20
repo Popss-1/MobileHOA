@@ -29,10 +29,6 @@ public class Requests {
 
 	private String description;
 
-	private short statusCodeIDFK;
-
-	private short prioritycodeIDFK;
-
 	private Date requestDate;
 
 	private int addressIDFK;
@@ -44,6 +40,29 @@ public class Requests {
 	private String status;
 
 	private Addresses address;
+
+	public Requests() {
+	}
+
+	public Requests(int requestUserIDFK, String title, String description, Date requestDate, int addressIDFK, int assignedUserIDMTMFK, String priority, String status, Addresses address) {
+		this.requestUserIDFK = requestUserIDFK;
+		this.title = title;
+		this.description = description;
+		this.requestDate = requestDate;
+		this.addressIDFK = addressIDFK;
+		this.assignedUserIDMTMFK = assignedUserIDMTMFK;
+		this.priority = priority;
+		this.status = status;
+		this.address = address;
+	}
+
+	public int getRequestIDPK() {
+		return requestIDPK;
+	}
+
+	public void setRequestIDPK(int requestIDPK) {
+		this.requestIDPK = requestIDPK;
+	}
 
 	public Addresses getAddress() {
 		return address;
@@ -70,13 +89,6 @@ public class Requests {
 		this.status = status;
 	}
 
-	public int getRequestIDPK() {
-		return requestIDPK;
-	}
-
-	public void setRequestIDPK(int requestIDPK) {
-		this.requestIDPK = requestIDPK;
-	}
 
 	public int getRequestUserIDFK() {
 		return requestUserIDFK;
@@ -102,21 +114,6 @@ public class Requests {
 		this.description = description;
 	}
 
-	public short getStatusCodeIDFK() {
-		return statusCodeIDFK;
-	}
-
-	public void setStatusCodeIDFK(short statusCodeIDFK) {
-		this.statusCodeIDFK = statusCodeIDFK;
-	}
-
-	public short getPrioritycodeIDFK() {
-		return prioritycodeIDFK;
-	}
-
-	public void setPrioritycodeIDFK(short prioritycodeIDFK) {
-		this.prioritycodeIDFK = prioritycodeIDFK;
-	}
 
 	public Date getRequestDate() {
 		return requestDate;
@@ -144,13 +141,17 @@ public class Requests {
 
 	@Override
 	public String toString() {
-		return "Requests [requestIDPK=" + requestIDPK + ", requestUserIDFK=" + requestUserIDFK + ", title=" + title
-				+ ", description=" + description + ", statusCodeIDFK=" + statusCodeIDFK + ", prioritycodeIDFK="
-				+ prioritycodeIDFK + ", requestDate=" + requestDate + ", addressIDFK=" + addressIDFK
-				+ ", assignedUserIDMTMFK=" + assignedUserIDMTMFK + ", priority=" + priority + ", status=" + status
-				+ ", address=" + address + "]";
+		return "Requests{" +
+				"requestIDPK=" + requestIDPK +
+				", requestUserIDFK=" + requestUserIDFK +
+				", title='" + title + '\'' +
+				", description='" + description + '\'' +
+				", requestDate=" + requestDate +
+				", addressIDFK=" + addressIDFK +
+				", assignedUserIDMTMFK=" + assignedUserIDMTMFK +
+				", priority='" + priority + '\'' +
+				", status='" + status + '\'' +
+				", address=" + address +
+				'}';
 	}
-
-	
-
 }

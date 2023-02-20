@@ -1,6 +1,7 @@
 package com.bigbrain.v1.serviceAndrepositories;
 
 import com.bigbrain.v1.models.Incidents;
+import com.bigbrain.v1.models.Users;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -44,7 +45,22 @@ public class IncidentRepository implements IncidentDao{
     public List<Incidents> findAllByID(int userIDFK) {
         try{
             return jdbc.query("SELECT IncidentIdPK,IncidentCategory, Description, UserIDFK, ReportedByPhoneNumber, IncidentStatus, Latitude, longitude, Title, IncidentDate FROM Incidents WHERE UserIDFK=?",
-                    new BeanPropertyRowMapper<>(Incidents.class));
+                    new BeanPropertyRowMapper<>(Incidents.class), userIDFK);
+        }
+        catch(EmptyResultDataAccessException e){
+            return null;
+        }
+        catch(DataAccessException e){
+            System.err.println(e);
+            return null;
+        }
+    }
+
+    @Override
+    public Incidents findIncidentByPK(int incidentIDPK){
+        try{
+            Incidents incident = (Incidents) jdbc.queryForObject("SELECT IncidentIdPK,IncidentCategory, Description, UserIDFK, ReportedByPhoneNumber, IncidentStatus, Latitude, longitude, Title, IncidentDate FROM Incidents WHERE incidentIDPK=?",new Object[]{incidentIDPK}, new BeanPropertyRowMapper(Incidents.class));
+            return incident;
         }
         catch(EmptyResultDataAccessException e){
             return null;
@@ -58,7 +74,7 @@ public class IncidentRepository implements IncidentDao{
     @Override
     public int deleteById(int incidentIDPK) {
         try{
-            return jdbc.update("DELETE FROM Incidents WHERE IncidentIdPK=?");
+            return jdbc.update("DELETE FROM Incidents WHERE IncidentIdPK=?", incidentIDPK);
         }
         catch(EmptyResultDataAccessException e){
             return 0;
@@ -100,8 +116,15 @@ public class IncidentRepository implements IncidentDao{
     @Override
     public int updateById(Incidents incident, int incidentIDPK) {
         try{
-            return jdbc.update("UPDATE Incidents SET  IncidentCategory=?, Description=?, ReportedByPhoneNumber=?, IncidentStatus=?, Latitude=?, Longitude=?, Title=? WHERE IncidentIdPK=? ",
-                    incident.getIncidentCategory(), incident.getDescription(), incident.getReportedByPhoneNumber(), incident.getIncidentStatus(), incident.getLatitude(), incident.getLongitude(), incident.getTitle());
+            return jdbc.update("UPDATE Incidents SET IncidentCategory=?, Description=?, ReportedByPhoneNumber=?, IncidentStatus=?, Latitude=?, longitude=?, Title=? WHERE IncidentIdPK=? ",
+                    incident.getIncidentCategory(),
+                    incident.getDescription(),
+                    incident.getReportedByPhoneNumber(),
+                    incident.getIncidentStatus(),
+                    incident.getLatitude(),
+                    incident.getLongitude(),
+                    incident.getTitle(),
+                    incidentIDPK);
         }
         catch(EmptyResultDataAccessException e){
             return 0;
