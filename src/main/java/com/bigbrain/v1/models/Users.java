@@ -19,16 +19,24 @@ public class Users {
     private Addresses address;
 	private List<Incidents> incidents;
 	private List<Requests> requests;
-	private List<UsersAnnouncements> usersAnnouncements;
+	private List<Announcements> announcements;
+    private Date registrationDate;
 
     public Users(){
 
     }
 
+    public Date getRegistrationDate() {
+        return registrationDate;
+    }
 
+    public void setRegistrationDate(Date registrationDate) {
+        this.registrationDate = registrationDate;
+    }
 
-    public Users(String email, String firstName, String lastName, String phoneNumber, Roles role, SubscriptionStatues subscriptionStatus, Addresses address) {
+    public Users(String email, Date registrationDate, String firstName, String lastName, String phoneNumber, Roles role, SubscriptionStatues subscriptionStatus, Addresses address) {
         this.email = email;
+        this.registrationDate = registrationDate;
         this.phoneNumber = phoneNumber;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -52,15 +60,15 @@ public class Users {
 		requests.add(request);
 	}
 
-	public List<UsersAnnouncements> getUsersAnnouncements() {
-		return usersAnnouncements;
-	}
+    public List<Announcements> getAnnouncements() {
+        return announcements;
+    }
 
-	public void addUsersAnnouncements(UsersAnnouncements usersAnnouncement) {
-		usersAnnouncements.add(usersAnnouncement);
-	}
+    public void setAnnouncements(List<Announcements> announcements) {
+        this.announcements = announcements;
+    }
 
-	public void setSubscriptionExpirationDate(Date subscriptionExpirationDate) {
+    public void setSubscriptionExpirationDate(Date subscriptionExpirationDate) {
 		this.subscriptionExpirationDate = subscriptionExpirationDate;
 	}
 
@@ -171,7 +179,8 @@ public class Users {
                 ", address=" + address +
                 ", incidents=" + incidents +
                 ", requests=" + requests +
-                ", usersAnnouncements=" + usersAnnouncements +
+                ", announcements=" + announcements +
+                ", registrationDate=" + registrationDate +
                 '}';
     }
 
@@ -195,7 +204,4 @@ public class Users {
         this.requests = requests;
     }
 
-    public void setUsersAnnouncements(List<UsersAnnouncements> usersAnnouncements) {
-        this.usersAnnouncements = usersAnnouncements;
-    }
 }

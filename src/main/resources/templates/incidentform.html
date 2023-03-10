@@ -38,7 +38,7 @@
       <label>City: </label> <Input type="text" th:field="*{incidentAddress.city}"
                                    th:required="required" class="form-control" />
       <label>State: </label> <select th:field = "*{incidentAddress.stateCode}">
-      <option th:each="stateCode : ${T(com.bigbrain.v1.models.enums.StateCodes).values() }"
+      <option th:each="stateCode : ${T(com.bigbrain.v1.models.Addresses.StateCodes).values() }"
               th:value="*{stateCode.toString()}"
               th:text="${stateCode}">
       </option>

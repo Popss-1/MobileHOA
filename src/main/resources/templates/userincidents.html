@@ -27,10 +27,10 @@
             <td th:text="${incident.incidentStatus}"></td>
             <td th:text="${incident.incidentDate}"></td>
             <td>
-                <a th:href="@{/deleteincidents/{incidentIDPK}(incidentIDPK=${incident.incidentIDPK})}">
+                <a th:href="@{/user/deleteincidents/{incidentIDPK}(incidentIDPK=${incident.incidentIDPK})}">
                     <button type="submit" >Delete</button>
                 </a>
-                <a th:href="@{/updateincident/{incidentIDPK}(incidentIDPK=${incident.incidentIDPK})}">
+                <a th:href="@{/user/updateincident/{incidentIDPK}(incidentIDPK=${incident.incidentIDPK})}">
                     <button type="submit" >Edit</button>
                 </a>
         </tr>

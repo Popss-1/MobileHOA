@@ -1,4 +1,4 @@
-package com.bigbrain.v1.serviceAndrepositories;
+package com.bigbrain.v1.DAOandRepositories;
 
 import com.bigbrain.v1.models.Requests;
 import org.springframework.dao.DataAccessException;
@@ -20,13 +20,12 @@ public class RequestRepository implements RequestDao{
 
     @Override
     public int save(Requests request) {
-        return jdbc.update("INSERT INTO Requests(requestuseridfk, title, description, priority, status, requestdate, addressidfk, assigneduseridmtmfk) VALUES (?,?,?,?,?,?,?,?)",
+        return jdbc.update("INSERT INTO Requests(requestuseridfk, title, description, priority, status, addressidfk, assigneduseridmtmfk) VALUES (?,?,?,?,?,?,?)",
                 request.getRequestUserIDFK(),
                 request.getTitle(),
                 request.getDescription(),
                 request.getPriority(),
                 request.getStatus(),
-                request.getRequestDate(),
                 request.getAddressIDFK(),
                 request.getAssignedUserIDMTMFK());
     }

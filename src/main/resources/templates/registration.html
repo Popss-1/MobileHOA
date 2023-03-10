@@ -15,7 +15,7 @@
                 <label > First name: </label> <Input type="text" th:value = "*{newUser.firstName}" th:field="*{newUser.firstName}" th:required="required" class="form-control" />
                 <label > Last name: </label> <Input type="text"
                                                     th:value = "*{newUser.lastName}" th:field="*{newUser.lastName}" th:required="required" class="form-control" />
-                <label > Email: </label> <Input type="text" th:field="*{user.email}" th:readonly = "true"  class="form-control" />
+                <label > Email: </label> <Input type="text" th:field="*{newUser.email}" th:readonly = "true"  class="form-control" />
             </div>
         </div>
         <div class = "row">
@@ -32,7 +32,7 @@
                 <label>City: </label> <Input type="text" th:field="*{newAddress.city}"
                                               th:required="required" class="form-control" />
                 <label>State: </label> <select th:field = "*{newAddress.stateCode}">
-                <option th:each="stateCode : ${T(com.bigbrain.v1.models.enums.StateCodes).values() }"
+                <option th:each="stateCode : ${T(com.bigbrain.v1.models.Addresses.StateCodes).values() }"
                         th:value="*{stateCode.toString()}"
                         th:text="${stateCode}">
                 </option>

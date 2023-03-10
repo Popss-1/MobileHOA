@@ -2,8 +2,9 @@ package com.bigbrain.v1.controllers;
 
 import com.bigbrain.v1.models.Addresses;
 import com.bigbrain.v1.models.Users;
-import com.bigbrain.v1.serviceAndrepositories.AddressRepository;
-import com.bigbrain.v1.serviceAndrepositories.UsersRepository;
+import com.bigbrain.v1.DAOandRepositories.AddressRepository;
+import com.bigbrain.v1.DAOandRepositories.UsersRepository;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,16 +22,16 @@ public class UserController {
         this.addressRepository = addressRepository;
     }
 
-    @GetMapping("/profile/{email}")
-    public String ShowProfile(@PathVariable(value = "email") String email, Model model){
-        Users user = usersRepository.findByEmail(email);
+    @GetMapping("/profile")
+    public String ShowProfile(HttpSession httpSession, Model model){
+        Users user = (Users) httpSession.getAttribute("user");
         model.addAttribute("user", user);
         return "profile";
     }
 
-    @GetMapping("/profile/edit/{email}")
-    public String EditProfile(@PathVariable(value = "email") String email, Model model){
-        Users user = usersRepository.findByEmail(email);
+    @GetMapping("/profile/edit")
+    public String EditProfile(HttpSession httpSession, Model model){
+        Users user = (Users) httpSession.getAttribute("user");
         Addresses userAddress = addressRepository.findByUserID(user.getUserIdPK());
         model.addAttribute("userAddress", userAddress);
         model.addAttribute("user", user);

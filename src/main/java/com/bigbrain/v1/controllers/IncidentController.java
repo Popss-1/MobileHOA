@@ -3,13 +3,18 @@ package com.bigbrain.v1.controllers;
 import com.bigbrain.v1.models.Addresses;
 import com.bigbrain.v1.models.Incidents;
 import com.bigbrain.v1.models.Users;
-import com.bigbrain.v1.serviceAndrepositories.IncidentRepository;
-import com.bigbrain.v1.serviceAndrepositories.UsersRepository;
+import com.bigbrain.v1.DAOandRepositories.IncidentRepository;
+import com.bigbrain.v1.DAOandRepositories.UsersRepository;
 import com.google.maps.GeoApiContext;
 import com.google.maps.GeocodingApi;
 import com.google.maps.errors.ApiException;
 import com.google.maps.model.GeocodingResult;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,6 +42,7 @@ public class IncidentController {
         this.usersRepository = usersRepository;
     }
 
+    //TODO delete
     @GetMapping("/incidentform/{email}")
     public String showIncidentForm(@PathVariable(value = "email") String email, Model model){
        // System.out.println("Incident form: " + email);
@@ -45,13 +51,14 @@ public class IncidentController {
         incident.setUserIDFK(user.getUserIdPK());
         incident.setReportedByPhoneNumber(user.getPhoneNumber());
         model.addAttribute("newIncident", incident);
-        model.addAttribute("user", user);
+       // model.addAttribute("user", user);
         model.addAttribute("incidentAddress", new Addresses());
         return "incidentform";
     }
 
     @PostMapping("/incidentform")
     public String submitIncidentForm(@ModelAttribute("newIncident") Incidents newIncident, @ModelAttribute("incidentAddress") Addresses incidentAddress, Model model){
+
         String address = incidentAddress.getAddressLine1() + " " + incidentAddress.getCity() + ", " + incidentAddress.getCity() + " " + incidentAddress.getZipCode();
 
         // geocode address
@@ -80,55 +87,56 @@ public class IncidentController {
 
         List<Incidents> allIncidents = incidentRepository.findAll();
 
-      //  model.addAttribute("staticMapUrl", generateStaticMap(allIncidents));
         model.addAttribute("allIncidents", allIncidents);
-        model.addAttribute("user", usersRepository.findById(newIncident.getUserIDFK()));
+     //   model.addAttribute("user", usersRepository.findById(newIncident.getUserIDFK()));
         return "incidentmap";
     }
 
-    @GetMapping("/incidentmap/{email}")
-    public String showIncidentMap(@PathVariable(value = "email") String email, Model model){
+    @GetMapping("/incidentmap")
+    public String showIncidentMap(HttpSession httpSession, Model model){
 
         List<Incidents> allIncidents = incidentRepository.findAll();
-      //  model.addAttribute("staticMapUrl", generateStaticMap(allIncidents));
         model.addAttribute("allIncidents", allIncidents);
-        model.addAttribute("user", usersRepository.findByEmail(email));
+      //  model.addAttribute("user", (Users) httpSession.getAttribute("user"));
+        int [] stats = incidentStats();
+        model.addAttribute("resolvedIncidents", stats[0]);
+        model.addAttribute("newIncidents", stats[1]);
         return "incidentmap";
     }
 
-    @GetMapping("/userincidents/{email}")
-    public String showUserIncidents(@PathVariable(value = "email") String email, Model model){
-        Users user = usersRepository.findByEmail(email);
+    @GetMapping("/user/incidents")
+    @PreAuthorize("hasRole('Homeowner')")
+    public String showUserIncidents(HttpSession httpSession, Model model){
+
+        Users user = (Users) httpSession.getAttribute("user");
         List<Incidents> userIncidents = incidentRepository.findAllByID(user.getUserIdPK());
         //System.out.println("USERINCIDENTS: " + userIncidents);
         model.addAttribute("userIncidents", userIncidents);
-        model.addAttribute("user", user);
+        //model.addAttribute("user", user);
         return "userincidents";
     }
 
-    @GetMapping("/deleteincidents/{incidentIDPK}")
-    public String deleteIncidents(@PathVariable int incidentIDPK, Model model){
-        Incidents incident = incidentRepository.findIncidentByPK(incidentIDPK);
+    @GetMapping("/user/deleteincidents/{incidentIDPK}")
+    public String deleteIncidents(@PathVariable int incidentIDPK,HttpSession httpSession, Model model){
         incidentRepository.deleteById(incidentIDPK);
         List<Incidents> allIncidents = incidentRepository.findAll();
-        Users user = usersRepository.findById(incident.getUserIDFK());
-        model.addAttribute("user", user);
+     //   model.addAttribute("user", (Users) httpSession.getAttribute("user"));
         model.addAttribute("allIncidents", allIncidents);
         return "incidentmap";
     }
 
-    @GetMapping("/updateincident/{incidentIDPK}")
-    public String updateIncident(@PathVariable int incidentIDPK, Model model){
+    //TODO when combined, return incidenttoupdate
+    @GetMapping("/user/updateincident/{incidentIDPK}")
+    public String updateIncident(@PathVariable int incidentIDPK, Model model, HttpSession httpSession){
         Incidents incidentToUpdate = incidentRepository.findIncidentByPK(incidentIDPK);
-        Users user = usersRepository.findById(incidentToUpdate.getUserIDFK());
-        model.addAttribute("user", user);
+        model.addAttribute("user", (Users) httpSession.getAttribute("user"));
         model.addAttribute("incidentToUpdate", incidentToUpdate);
         model.addAttribute("incidentAddress", new Addresses());
         return "incidentupdateform";
     }
 
-    @PostMapping("/updateincident")
-    public String submitUpdateIncident(@ModelAttribute("incidentToUpdate") Incidents incidentToUpdate, @ModelAttribute("incidentAddress") Addresses incidentAddress, Model model){
+    @PostMapping("/user/updateincident")
+    public String submitUpdateIncident(@ModelAttribute("incidentToUpdate") Incidents incidentToUpdate, HttpSession httpSession, @ModelAttribute("incidentAddress") Addresses incidentAddress, Model model){
         String address = incidentAddress.getAddressLine1() + " " + incidentAddress.getCity() + ", " + incidentAddress.getCity() + " " + incidentAddress.getZipCode();
 
         // geocode address
@@ -150,15 +158,39 @@ public class IncidentController {
         incidentToUpdate.setLongitude(results[0].geometry.location.lng);
 
 
-        System.out.println("New incident:" + incidentToUpdate.toString());
+       // System.out.println("New incident:" + incidentToUpdate.toString());
         incidentRepository.updateById(incidentToUpdate, incidentToUpdate.getIncidentIDPK());
 
         List<Incidents> allIncidents = incidentRepository.findAll();
 
 
         model.addAttribute("allIncidents", allIncidents);
-        model.addAttribute("user", usersRepository.findById(incidentToUpdate.getUserIDFK()));
+        model.addAttribute("user", (Users) httpSession.getAttribute("user"));
         return "incidentmap";
+    }
+
+    /*
+    *Display stats for last month
+    *Display number of total resolved and new incidents last month
+     */
+    public int [] incidentStats(){
+        int [] arr = new int [2];
+        int resolved_incidents = 0;
+        int new_incidents = 0;
+
+        LocalDate currentDate = LocalDate.now();
+        LocalDate firstDayOfLastMonth = LocalDate.of(currentDate.getYear(), currentDate.minusMonths(1).getMonth(), 1);
+        LocalDate lastDayOfLastMonth = firstDayOfLastMonth.withDayOfMonth(firstDayOfLastMonth.lengthOfMonth());
+        List<Incidents> lastMonthIncidents = incidentRepository.findByDateBetween(Date.valueOf(firstDayOfLastMonth), Date.valueOf(lastDayOfLastMonth));
+        for ( Incidents incident : lastMonthIncidents){
+            if ( incident.getIncidentStatus() == "New")
+                new_incidents++;
+            else
+                resolved_incidents++;
+        }
+        arr[0] = resolved_incidents;
+        arr[1] = new_incidents;
+        return arr;
     }
 
 }

@@ -1,4 +1,4 @@
-package com.bigbrain.v1.serviceAndrepositories;
+package com.bigbrain.v1.DAOandRepositories;
 
 import java.util.List;
 
@@ -9,6 +9,7 @@ public interface UsersDAO {
 	int save(Users user);
 	
 	int update(Users users, int userIDPK);
+
 	
 	Users findByEmail(String email);
 
@@ -19,4 +20,6 @@ public interface UsersDAO {
 
 
 	List<Users> findAllbYRole(String role);
+	List<Users> findAllbYSubscriptionStatus(String subscriptionStatus);
+
 }

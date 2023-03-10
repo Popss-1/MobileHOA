@@ -7,7 +7,7 @@
 <body>
 <div th:insert="fragments/navbar"></div>
 <h2>Incident Form</h2>
-<form action="#" th:action="@{/updateincident}" method="post">
+<form action="#" th:action="@{/user/updateincident}" method="post">
 
   <div class = "row">
     <div class="col-sm-6 form-group">
@@ -38,7 +38,7 @@
       <label>City: </label> <Input type="text" th:field="*{incidentAddress.city}"
                                    th:required="required" class="form-control" />
       <label>State: </label> <select th:field = "*{incidentAddress.stateCode}">
-      <option th:each="stateCode : ${T(com.bigbrain.v1.models.enums.StateCodes).values() }"
+      <option th:each="stateCode : ${T(com.bigbrain.v1.models.Addresses.StateCodes).values() }"
               th:value="*{stateCode.toString()}"
               th:text="${stateCode}">
       </option>

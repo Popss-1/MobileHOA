@@ -1,4 +1,4 @@
-package com.bigbrain.v1.serviceAndrepositories;
+package com.bigbrain.v1.DAOandRepositories;
 
 import com.bigbrain.v1.models.Incidents;
 import org.springframework.dao.DataAccessException;
@@ -28,7 +28,7 @@ public class IncidentRepository implements IncidentDao{
     @Override
     public List<Incidents> findAll() {
         try{
-            return jdbc.query("SELECT IncidentIdPK,IncidentCategory, Description, UserIDFK, ReportedByPhoneNumber, IncidentStatus, Latitude, longitude, Title, IncidentDate FROM Incidents",
+            return jdbc.query("SELECT IncidentIdPK,IncidentCategory, Description, UserIDFK, ReportedByPhoneNumber, IncidentStatus, Latitude, longitude, Title, IncidentDate FROM Incidents ",
                     new BeanPropertyRowMapper<>(Incidents.class));
         }
         catch(EmptyResultDataAccessException e){
@@ -50,6 +50,21 @@ public class IncidentRepository implements IncidentDao{
             return null;
         }
         catch(DataAccessException e){
+            System.err.println(e);
+            return null;
+        }
+    }
+
+    @Override
+    public List<Incidents> findByDateBetween(Date firstDayOfLastMonth, Date lastDayOfLastMonth) {
+        try {
+            return jdbc.query("SELECT IncidentIdPK, IncidentCategory, Description, UserIDFK, ReportedByPhoneNumber, IncidentStatus, Latitude, Longitude, Title, IncidentDate FROM Incidents WHERE IncidentDate BETWEEN ? AND ?",
+                    new BeanPropertyRowMapper<>(Incidents.class),
+                    firstDayOfLastMonth,
+                    lastDayOfLastMonth);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        } catch (DataAccessException e) {
             System.err.println(e);
             return null;
         }

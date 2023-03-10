@@ -1,4 +1,4 @@
-package com.bigbrain.v1.serviceAndrepositories;
+package com.bigbrain.v1.DAOandRepositories;
 import com.bigbrain.v1.models.Bills;
 
 import java.util.List;

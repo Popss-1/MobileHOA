@@ -1,4 +1,4 @@
-package com.bigbrain.v1.serviceAndrepositories;
+package com.bigbrain.v1.DAOandRepositories;
 
 import java.util.List;
 
@@ -37,6 +37,8 @@ public class UsersRepository implements UsersDAO{
 		return jdbc.update("UPDATE users SET email =?, subscriptionStatus =?, SubscriptionExpirationDate=?, PhoneNumber =? WHERE userIDPK=?",
 				new Object[] { user.getEmail(), user.getSubscriptionStatus(), user.getSubscriptionExpirationDate(), user.getPhoneNumber(), userIDPK}) ;
 	}
+
+
 
 	@Override
 	public Users findByEmail(String email) {
@@ -87,6 +89,12 @@ public class UsersRepository implements UsersDAO{
 	@Override
 	public List<Users> findAllbYRole(String role) {
 		List<Users> users = jdbc.query("SELECT userIDPK, email, firstName, lastName, phoneNumber, subscriptionstatus, SubscriptionExpirationDate, Role FROM Users WHERE role =?", new BeanPropertyRowMapper<Users>(Users.class));
+		return users;
+	}
+
+	@Override
+	public List<Users> findAllbYSubscriptionStatus(String subscriptionStatus) {
+		List<Users> users = jdbc.query("SELECT userIDPK, email, firstName, lastName, phoneNumber, subscriptionstatus, SubscriptionExpirationDate, Role FROM Users WHERE subscriptionStatus =?", new BeanPropertyRowMapper<Users>(Users.class));
 		return users;
 	}
 

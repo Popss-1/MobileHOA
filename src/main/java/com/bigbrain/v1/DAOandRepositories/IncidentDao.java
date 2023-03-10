@@ -1,4 +1,4 @@
-package com.bigbrain.v1.serviceAndrepositories;
+package com.bigbrain.v1.DAOandRepositories;
 import java.util.Date;
 import java.util.List;
 import com.bigbrain.v1.models.Incidents;
@@ -10,6 +10,7 @@ public interface IncidentDao {
     List<Incidents>findAll();
 
     List<Incidents>findAllByID(int userIDFK);
+    List<Incidents>findByDateBetween(Date firstDayOfLastMonth,  Date lastDayOfLastMonth);
 
     Incidents findIncidentByPK(int incidentIDPK);
 

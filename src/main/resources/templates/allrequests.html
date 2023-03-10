@@ -26,10 +26,10 @@
       <td th:text="${request.requestDate}"></td>
 
       <td>
-        <a th:href="@{/deleterequest/{requestIDPK}(requestIDPK=${request.requestIDPK})}">
+        <a th:href="@{/admin/deleterequest/{requestIDPK}(requestIDPK=${request.requestIDPK})}">
           <button type="submit" >Delete</button>
         </a>
-        <a th:href="@{/updaterequest/{requestIDPK}(requestIDPK=${request.requestIDPK})}">
+        <a th:href="@{/admin/updaterequest/{requestIDPK}(requestIDPK=${request.requestIDPK})}">
           <button type="submit" >Edit</button>
         </a>
     </tr>

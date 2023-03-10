@@ -8,13 +8,13 @@
         <li class="nav-item"><a
                 class="btn btn-outline-light" onclick="history.go(-1);">Back</a></li>
         <li class="nav-item"><a
-                class="btn btn-outline-light" th:href="@{/profile/{email}(email=${user.email})}">Profile</a></li>
+                class="btn btn-outline-light" th:href="@{/profile}">Profile</a></li>
         <li  class="nav-item"><a
-                class="btn btn-outline-light" th:href="@{/incidentmap/{email}(email=${user.email})}">Incidents</a></li>
+                class="btn btn-outline-light" th:href="@{/incidentmap}">Incidents</a></li>
         <li  class="nav-item"><a
-                class="btn btn-outline-light" th:href="@{/alluserrequests/{email}(email=${user.email})}">Requests</a></li>
+                class="btn btn-outline-light" th:href="@{/admin/alluserrequests}">Requests</a></li>
         <li  class="nav-item"><a
-                class="btn btn-outline-light" th:href="@{/bills}">Bills</a></li>
+                class="btn btn-outline-light" th:href="@{/allbills}">Bills</a></li>
         <li  class="nav-item"><a
                 class="btn btn-outline-light" th:href="@{/logout}">Logout</a></li>
       </ul>

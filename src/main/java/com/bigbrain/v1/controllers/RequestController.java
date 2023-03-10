@@ -3,16 +3,15 @@ package com.bigbrain.v1.controllers;
 import com.bigbrain.v1.models.Addresses;
 import com.bigbrain.v1.models.Requests;
 import com.bigbrain.v1.models.Users;
-import com.bigbrain.v1.serviceAndrepositories.AddressRepository;
-import com.bigbrain.v1.serviceAndrepositories.RequestRepository;
-import com.bigbrain.v1.serviceAndrepositories.UsersRepository;
+import com.bigbrain.v1.DAOandRepositories.AddressRepository;
+import com.bigbrain.v1.DAOandRepositories.RequestRepository;
+import com.bigbrain.v1.DAOandRepositories.UsersRepository;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
-import java.sql.Date;
-import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -29,64 +28,62 @@ public class RequestController {
         this.addressRepository = addressRepository;
     }
 
-    @GetMapping("/requestform/{email}")
-    public String showRequestForm(@PathVariable("email") String email, Model model){
-        Users user = usersRepository.findByEmail(email);
+    @GetMapping("/user/requestform")
+    public String showRequestForm(Model model, HttpSession httpSession){
+        Users user = (Users) httpSession.getAttribute("user");
         Requests request = new Requests();
         request.setRequestUserIDFK(user.getUserIdPK());
         model.addAttribute("newRequest", request);
         model.addAttribute("user", user);
-        return "submitrequest";
+        return "submitrequestform";
     }
 
-    @PostMapping("/requestform")
-    public String submitRequestForm(@ModelAttribute("newRequest") Requests newRequest, Model model){
-        Users user = usersRepository.findById(newRequest.getRequestUserIDFK());
+    @PostMapping("/user/requestform")
+    public String submitRequestForm(@ModelAttribute("newRequest") Requests newRequest,HttpSession httpSession, Model model){
+        Users user = (Users) httpSession.getAttribute("user");
         newRequest.setStatus(String.valueOf(Requests.Statuses.Assigned));
         Addresses address = addressRepository.findByUserID(newRequest.getRequestUserIDFK());
         newRequest.setAddressIDFK(address.getAddressIDPK());
-        LocalDate dateNow = LocalDate.now();
-        newRequest.setRequestDate(Date.valueOf(dateNow));
-
         // assign MTM
-        System.out.println("newrequest: " + newRequest.toString());
+       // System.out.println("newrequest: " + newRequest.toString());
         requestRepository.save(newRequest);
-        return "redirect:alluserrequests/" + user.getEmail();
+        model.addAttribute("user", user);
+        return "redirect:/welcome";
     }
 
-    @GetMapping("/alluserrequests/{email}")
-    public String showAllUserRequests(@PathVariable( "email") String email, Model model){
-        Users user = usersRepository.findByEmail(email);
+    @GetMapping("/admin/alluserrequests")
+    public String showAllUserRequests(HttpSession httpSession, Model model){
+        Users user = (Users) httpSession.getAttribute("user");
         List<Requests> allUserRequests = requestRepository.findAllByUserIdFk(user.getUserIdPK());
        // System.out.println("allrequests: " + allUserRequests.toString());
         model.addAttribute("allUserRequests", allUserRequests);
         model.addAttribute("user", user);
-        return "userrequests";
+        return "allrequests";
     }
 
-    @GetMapping("/deleterequest/{requestIDPK}")
-    public String deleteRequest(@PathVariable int requestIDPK, Model model){
-        Requests request = requestRepository.findById(requestIDPK);
-        Users user = usersRepository.findById(request.getRequestUserIDFK());
+    @GetMapping("/admin/deleterequest/{requestIDPK}")
+    public String deleteRequest(@PathVariable int requestIDPK, Model model, HttpSession httpSession){
+        Users user = (Users) httpSession.getAttribute("user");
+        model.addAttribute("user", user);
         requestRepository.deleteById(requestIDPK);
-        return "forward:/alluserrequests/" + user.getEmail();
+        return "forward:/admin/alluserrequests/";
     }
 
-    @GetMapping("/updaterequest/{requestIDPK}")
-    public String updateRequest(@PathVariable int requestIDPK, Model model){
+    @GetMapping("/admin/updaterequest/{requestIDPK}")
+    public String updateRequest(@PathVariable int requestIDPK, Model model, HttpSession httpSession){
         Requests requestToUpdate = requestRepository.findById(requestIDPK);
-        Users user = usersRepository.findById(requestToUpdate.getRequestUserIDFK());
+        Users user = (Users) httpSession.getAttribute("user");
         model.addAttribute("user", user);
         model.addAttribute("requestToUpdate", requestToUpdate);
         return "requestupdateform";
     }
 
-    @RequestMapping(value = "/updaterequest", method = RequestMethod.POST)
-    public String submitUpdateRequest(@ModelAttribute("requestToUpdate") Requests requestToUpdate, Model model){
-        Users user = usersRepository.findById(requestToUpdate.getRequestUserIDFK());
+    @PostMapping("/updaterequest")
+    public String submitUpdateRequest(@ModelAttribute("requestToUpdate") Requests requestToUpdate, HttpSession httpSession,Model model){
+        Users user = (Users) httpSession.getAttribute("user");
         requestRepository.update(requestToUpdate, requestToUpdate.getRequestIDPK());
         model.addAttribute("user", user);
-        return "redirect:alluserrequests/" + user.getEmail();
+        return "redirect:/admin/alluserrequests";
     }
 
 

@@ -7,7 +7,7 @@ public class Incidents {
 
 	public enum Statues {
        New,
-       Expired,
+       Expired, // after 6 months it expires
        Resolved
     } 
 	

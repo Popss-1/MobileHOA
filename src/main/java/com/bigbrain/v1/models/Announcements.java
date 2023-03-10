@@ -1,43 +1,35 @@
 package com.bigbrain.v1.models;
 
 import java.util.Date;
-import java.util.List;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.SequenceGenerator;
 
 
 public class Announcements {
 	
-	public enum Categories {
+	public enum Severities {
 	       Urgent,
 	       Social,
 	       Informative
 	    } 
-	
 
-	private int announcementPK;
+	private int announcementIDPK;
 	private int userIDFK;
-	private String category;
+	private String severity;
 	private Date announcementDate;
 	private String title;
 	private String description;
-	private List<UsersAnnouncements> usersAnnouncements;
 
-	public List<UsersAnnouncements> getUsersAnnouncements() {
-		return usersAnnouncements;
+	public Announcements(){
+
+	}
+	public Announcements(int userIDFK, String category, String title, String description) {
+		this.userIDFK = userIDFK;
+		this.severity = category;
+		this.title = title;
+		this.description = description;
 	}
 
-	public void addUsersAnnouncements(UsersAnnouncements usersAnnouncement) {
-		usersAnnouncements.add(usersAnnouncement);
-	}
-	public int getAnnouncementPK() {
-		return announcementPK;
-	}
-
-	public void setAnnouncementPK(int announcementPK) {
-		this.announcementPK = announcementPK;
+	public int getAnnouncementIDPK() {
+		return announcementIDPK;
 	}
 
 	public int getUserIDFK() {
@@ -48,12 +40,12 @@ public class Announcements {
 		this.userIDFK = userIDFK;
 	}
 
-	public String getCategory() {
-		return category;
+	public String getSeverity() {
+		return severity;
 	}
 
 	public void setSeverity(String category) {
-		this.category = category;
+		this.severity = category;
 	}
 
 	public Date getAnnouncementDate() {
@@ -82,7 +74,7 @@ public class Announcements {
 
 	@Override
 	public String toString() {
-		return "Announcements [announcementPK=" + announcementPK + ", userIDFK=" + userIDFK + ", severity=" + category
+		return "Announcements [announcementPK=" + announcementIDPK + ", userIDFK=" + userIDFK + ", severity=" + severity
 				+ ", announcementDate=" + announcementDate + ", title=" + title + ", description=" + description + "]";
 	}
 

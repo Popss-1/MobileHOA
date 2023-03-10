@@ -1,6 +1,5 @@
-package com.bigbrain.v1.serviceAndrepositories;
+package com.bigbrain.v1.DAOandRepositories;
 
-import com.bigbrain.v1.models.Addresses;
 import com.bigbrain.v1.models.Bills;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
