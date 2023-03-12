@@ -12,9 +12,6 @@ import com.google.maps.model.GeocodingResult;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -183,7 +180,7 @@ public class IncidentController {
         LocalDate lastDayOfLastMonth = firstDayOfLastMonth.withDayOfMonth(firstDayOfLastMonth.lengthOfMonth());
         List<Incidents> lastMonthIncidents = incidentRepository.findByDateBetween(Date.valueOf(firstDayOfLastMonth), Date.valueOf(lastDayOfLastMonth));
         for ( Incidents incident : lastMonthIncidents){
-            if ( incident.getIncidentStatus() == "New")
+            if ( incident.getStatus() == "New")
                 new_incidents++;
             else
                 resolved_incidents++;

@@ -1,6 +1,8 @@
 package com.bigbrain.v1.controllers;
 
+import com.bigbrain.v1.DAOandRepositories.MaintenanceRepository;
 import com.bigbrain.v1.models.Addresses;
+import com.bigbrain.v1.models.Maintenances;
 import com.bigbrain.v1.models.Requests;
 import com.bigbrain.v1.models.Users;
 import com.bigbrain.v1.DAOandRepositories.AddressRepository;
@@ -18,14 +20,14 @@ import java.util.List;
 public class RequestController {
 
     private RequestRepository requestRepository;
-    private UsersRepository usersRepository;
     private AddressRepository addressRepository;
+    private MaintenanceRepository maintenanceRepository;
 
     @Autowired
-    public RequestController(RequestRepository requestRepository, UsersRepository usersRepository, AddressRepository addressRepository){
+    public RequestController(RequestRepository requestRepository, AddressRepository addressRepository, MaintenanceRepository maintenanceRepository) {
         this.requestRepository = requestRepository;
-        this.usersRepository = usersRepository;
         this.addressRepository = addressRepository;
+        this.maintenanceRepository = maintenanceRepository;
     }
 
     @GetMapping("/user/requestform")
@@ -41,11 +43,18 @@ public class RequestController {
     @PostMapping("/user/requestform")
     public String submitRequestForm(@ModelAttribute("newRequest") Requests newRequest,HttpSession httpSession, Model model){
         Users user = (Users) httpSession.getAttribute("user");
-        newRequest.setStatus(String.valueOf(Requests.Statuses.Assigned));
+
         Addresses address = addressRepository.findByUserID(newRequest.getRequestUserIDFK());
         newRequest.setAddressIDFK(address.getAddressIDPK());
-        // assign MTM
-       // System.out.println("newrequest: " + newRequest.toString());
+        // assign maintenance
+        int maintenanceAssignment = assignMaintenance();
+        if ( maintenanceAssignment != -1) {
+            newRequest.setMaintenanceIdFK(maintenanceAssignment);
+            newRequest.setStatus(Requests.Statuses.Assigned.toString());
+        }
+        else{
+            newRequest.setStatus(Requests.Statuses.Received.toString());
+        }
         requestRepository.save(newRequest);
         model.addAttribute("user", user);
         return "redirect:/welcome";
@@ -84,6 +93,15 @@ public class RequestController {
         requestRepository.update(requestToUpdate, requestToUpdate.getRequestIDPK());
         model.addAttribute("user", user);
         return "redirect:/admin/alluserrequests";
+    }
+
+    public int assignMaintenance(){
+        List<Maintenances>allMaintenances = maintenanceRepository.findAll();
+        for ( Maintenances maintenance : allMaintenances){
+            if ( maintenance.getAvailability().equals("Available") && maintenance.getNumberOfRequests() <= 5)
+                return maintenance.getMaintenanceIdPk();
+        }
+        return -1;
     }
 
 

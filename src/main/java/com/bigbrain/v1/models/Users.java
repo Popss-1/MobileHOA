@@ -153,7 +153,7 @@ public class Users {
     public enum Roles {
         Admin,
         Homeowner,
-        Maintainence,
+        Maintenance,
         Manager
     }
 

@@ -28,7 +28,7 @@ public class BillController {
         List<Bills> userBills = billsRepository.findByUserID(user.getUserIdPK());
         //model.addAttribute("user", user);
         model.addAttribute("userBills", userBills);
-        System.out.println("all user bills" + userBills);
+       // System.out.println("all user bills" + userBills);
     }
 
     @GetMapping("/admin/allbills")

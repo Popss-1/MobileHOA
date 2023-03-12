@@ -14,9 +14,9 @@ public class Incidents {
 
 	private int incidentIDPK;
 
-	private String incidentCategory;
+	private String category;
 
-	private String incidentStatus;
+	private String status;
 	private String description;
 
 	private int userIDFK;
@@ -32,9 +32,9 @@ public class Incidents {
 	private Date incidentDate;
 
 
-	public Incidents(String incidentCategory, String incidentStatus, String description, int userIDFK, String reportedByPhoneNumber, double longitude, double latitude, String title, Date incidentDate) {
-		this.incidentCategory = incidentCategory;
-		this.incidentStatus = incidentStatus;
+	public Incidents(String category, String status, String description, int userIDFK, String reportedByPhoneNumber, double longitude, double latitude, String title, Date incidentDate) {
+		this.category = category;
+		this.status = status;
 		this.description = description;
 		this.userIDFK = userIDFK;
 		this.reportedByPhoneNumber = reportedByPhoneNumber;
@@ -56,20 +56,20 @@ public class Incidents {
 		this.incidentIDPK = incidentIDPK;
 	}
 
-	public String getIncidentCategory() {
-		return incidentCategory;
+	public String getCategory() {
+		return category;
 	}
 
-	public void setIncidentCategory(String incidentCategory) {
-		this.incidentCategory = incidentCategory;
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
-	public String getIncidentStatus() {
-		return incidentStatus;
+	public String getStatus() {
+		return status;
 	}
 
-	public void setIncidentStatus(String incidentStatus) {
-		this.incidentStatus = incidentStatus;
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	public String getDescription() {
@@ -132,8 +132,8 @@ public class Incidents {
 	public String toString() {
 		return "Incidents{" +
 				"incidentIDPK=" + incidentIDPK +
-				", incidentCategory='" + incidentCategory + '\'' +
-				", incidentStatus='" + incidentStatus + '\'' +
+				", incidentCategory='" + category + '\'' +
+				", incidentStatus='" + status + '\'' +
 				", description='" + description + '\'' +
 				", userIDFK=" + userIDFK +
 				", reportedByPhoneNumber='" + reportedByPhoneNumber + '\'' +

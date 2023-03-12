@@ -6,10 +6,10 @@ import java.util.Date;
 public class Requests {
 
 	public enum Priorities {
-        low,
+        Low,
         Medium,
         High,
-        Servere
+        Severe
     }
 	
 	public enum Statuses {
@@ -33,7 +33,7 @@ public class Requests {
 
 	private int addressIDFK;
 
-	private int assignedUserIDMTMFK;
+	private int maintenanceIdFK;
 
 	private String priority;
 
@@ -44,13 +44,13 @@ public class Requests {
 	public Requests() {
 	}
 
-	public Requests(int requestUserIDFK, String title, String description, Date requestDate, int addressIDFK, int assignedUserIDMTMFK, String priority, String status, Addresses address) {
+	public Requests(int requestUserIDFK, String title, String description, Date requestDate, int addressIDFK, int maintenanceIdFK, String priority, String status, Addresses address) {
 		this.requestUserIDFK = requestUserIDFK;
 		this.title = title;
 		this.description = description;
 		this.requestDate = requestDate;
 		this.addressIDFK = addressIDFK;
-		this.assignedUserIDMTMFK = assignedUserIDMTMFK;
+		this.maintenanceIdFK = maintenanceIdFK;
 		this.priority = priority;
 		this.status = status;
 		this.address = address;
@@ -131,12 +131,12 @@ public class Requests {
 		this.addressIDFK = addressIDFK;
 	}
 
-	public int getAssignedUserIDMTMFK() {
-		return assignedUserIDMTMFK;
+	public int getMaintenanceIdFK() {
+		return maintenanceIdFK;
 	}
 
-	public void setAssignedUserIDMTMFK(int assignedUserIDMTMFK) {
-		this.assignedUserIDMTMFK = assignedUserIDMTMFK;
+	public void setMaintenanceIdFK(int maintenanceIdFK) {
+		this.maintenanceIdFK = maintenanceIdFK;
 	}
 
 	@Override
@@ -148,7 +148,7 @@ public class Requests {
 				", description='" + description + '\'' +
 				", requestDate=" + requestDate +
 				", addressIDFK=" + addressIDFK +
-				", assignedUserIDMTMFK=" + assignedUserIDMTMFK +
+				", assignedUserIDMTMFK=" + maintenanceIdFK +
 				", priority='" + priority + '\'' +
 				", status='" + status + '\'' +
 				", address=" + address +

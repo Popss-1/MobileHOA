@@ -21,12 +21,13 @@ public class Bills {
 
 	private Date billDate;
 
-	private int amountDue;
+	private long amountDue;
 	private List<Payments> payments;
 
 	public Bills(){
 
 	}
+
 	public Bills(int userIDFK, Date billDate, int amountDue) {
 		this.userIDFK = userIDFK;
 		this.billDate = billDate;
@@ -48,9 +49,6 @@ public class Bills {
 	public int getBillIDPK() {
 		return billIDPK;
 	}
-	public void setBillIDPK(int billIDPK) {
-		this.billIDPK = billIDPK;
-	}
 	public int getUserIDFK() {
 		return userIDFK;
 	}
@@ -64,11 +62,8 @@ public class Bills {
 		this.billDate = billDate;
 	}
 
-	public int getAmountDue() {
+	public long getAmountDue() {
 		return amountDue;
 	}
 
-	public void setAmountDue(int amountDue) {
-		this.amountDue = amountDue;
-	}
 }

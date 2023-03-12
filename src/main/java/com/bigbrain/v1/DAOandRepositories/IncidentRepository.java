@@ -20,15 +20,15 @@ public class IncidentRepository implements IncidentDao{
 
     @Override
     public int save(Incidents incident) {
-        return jdbc.update("INSERT INTO Incidents(IncidentCategory, Description, UserIDFK, ReportedByPhoneNumber, IncidentStatus, Latitude, longitude, Title, IncidentDate) Values(?,?,?,?,?,?,?,?,?)",
-                incident.getIncidentCategory(), incident.getDescription(), incident.getUserIDFK(), incident.getReportedByPhoneNumber(), incident.getIncidentStatus(), incident.getLatitude(),
+        return jdbc.update("INSERT INTO Incidents(category, Description, UserIDFK, ReportedByPhoneNumber, status, Latitude, longitude, Title, IncidentDate) Values(?,?,?,?,?,?,?,?,?)",
+                incident.getCategory(), incident.getDescription(), incident.getUserIDFK(), incident.getReportedByPhoneNumber(), incident.getStatus(), incident.getLatitude(),
                 incident.getLongitude(), incident.getTitle(), incident.getIncidentDate());
     }
 
     @Override
     public List<Incidents> findAll() {
         try{
-            return jdbc.query("SELECT IncidentIdPK,IncidentCategory, Description, UserIDFK, ReportedByPhoneNumber, IncidentStatus, Latitude, longitude, Title, IncidentDate FROM Incidents ",
+            return jdbc.query("SELECT IncidentIdPK,category, Description, UserIDFK, ReportedByPhoneNumber, status, Latitude, longitude, Title, IncidentDate FROM Incidents ",
                     new BeanPropertyRowMapper<>(Incidents.class));
         }
         catch(EmptyResultDataAccessException e){
@@ -43,7 +43,7 @@ public class IncidentRepository implements IncidentDao{
     @Override
     public List<Incidents> findAllByID(int userIDFK) {
         try{
-            return jdbc.query("SELECT IncidentIdPK,IncidentCategory, Description, UserIDFK, ReportedByPhoneNumber, IncidentStatus, Latitude, longitude, Title, IncidentDate FROM Incidents WHERE UserIDFK=?",
+            return jdbc.query("SELECT IncidentIdPK,category, Description, UserIDFK, ReportedByPhoneNumber, Status, Latitude, longitude, Title, IncidentDate FROM Incidents WHERE UserIDFK=?",
                     new BeanPropertyRowMapper<>(Incidents.class), userIDFK);
         }
         catch(EmptyResultDataAccessException e){
@@ -58,7 +58,7 @@ public class IncidentRepository implements IncidentDao{
     @Override
     public List<Incidents> findByDateBetween(Date firstDayOfLastMonth, Date lastDayOfLastMonth) {
         try {
-            return jdbc.query("SELECT IncidentIdPK, IncidentCategory, Description, UserIDFK, ReportedByPhoneNumber, IncidentStatus, Latitude, Longitude, Title, IncidentDate FROM Incidents WHERE IncidentDate BETWEEN ? AND ?",
+            return jdbc.query("SELECT IncidentIdPK, category, Description, UserIDFK, ReportedByPhoneNumber, Status, Latitude, Longitude, Title, IncidentDate FROM Incidents WHERE IncidentDate BETWEEN ? AND ?",
                     new BeanPropertyRowMapper<>(Incidents.class),
                     firstDayOfLastMonth,
                     lastDayOfLastMonth);
@@ -73,7 +73,7 @@ public class IncidentRepository implements IncidentDao{
     @Override
     public Incidents findIncidentByPK(int incidentIDPK){
         try{
-            Incidents incident = (Incidents) jdbc.queryForObject("SELECT IncidentIdPK,IncidentCategory, Description, UserIDFK, ReportedByPhoneNumber, IncidentStatus, Latitude, longitude, Title, IncidentDate FROM Incidents WHERE incidentIDPK=?",new Object[]{incidentIDPK}, new BeanPropertyRowMapper(Incidents.class));
+            Incidents incident = (Incidents) jdbc.queryForObject("SELECT IncidentIdPK,category, Description, UserIDFK, ReportedByPhoneNumber, Status, Latitude, longitude, Title, IncidentDate FROM Incidents WHERE incidentIDPK=?",new Object[]{incidentIDPK}, new BeanPropertyRowMapper(Incidents.class));
             return incident;
         }
         catch(EmptyResultDataAccessException e){
@@ -131,10 +131,10 @@ public class IncidentRepository implements IncidentDao{
     public int updateById(Incidents incident, int incidentIDPK) {
         try{
             return jdbc.update("UPDATE Incidents SET IncidentCategory=?, Description=?, ReportedByPhoneNumber=?, IncidentStatus=?, Latitude=?, longitude=?, Title=? WHERE IncidentIdPK=? ",
-                    incident.getIncidentCategory(),
+                    incident.getCategory(),
                     incident.getDescription(),
                     incident.getReportedByPhoneNumber(),
-                    incident.getIncidentStatus(),
+                    incident.getStatus(),
                     incident.getLatitude(),
                     incident.getLongitude(),
                     incident.getTitle(),

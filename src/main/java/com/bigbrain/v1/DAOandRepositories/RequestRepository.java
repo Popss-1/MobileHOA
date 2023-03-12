@@ -27,7 +27,7 @@ public class RequestRepository implements RequestDao{
                 request.getPriority(),
                 request.getStatus(),
                 request.getAddressIDFK(),
-                request.getAssignedUserIDMTMFK());
+                request.getMaintenanceIdFK());
     }
 
     @Override
@@ -38,7 +38,7 @@ public class RequestRepository implements RequestDao{
                     request.getDescription(),
                     request.getPriority(),
                     request.getStatus(),
-                    request.getAssignedUserIDMTMFK(),
+                    request.getMaintenanceIdFK(),
                     requestIdPK);
         }
         catch(EmptyResultDataAccessException e){
