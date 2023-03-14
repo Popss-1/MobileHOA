@@ -70,15 +70,16 @@
 
 
             <td th:text="${incident.incidentIDPK}"></td>
-            <td th:text="${incident.incidentCategory}"></td>
+            <td th:text="${incident.category}"></td>
             <td th:text="${incident.title}"></td>
             <td th:text="${incident.description}"></td>
-            <td th:text="${incident.incidentStatus}"></td>
+            <td th:text="${incident.status}"></td>
             <td th:text="${incident.incidentDate}"></td>
         </tr>
     </table>
 </div>
-
+<h1>Incidents resolved last month: </h1> <span th:text = "${resolvedIncidents}"></span><br>
+<h1>New Incidents last month: </h1> <span th:text = "${newIncidents}"></span><br>
 <a class="btn" th:href="@{/incidentform}">Submit incident</a>
 <a class="btn" th:href="@{/user/incidents}">My incidents</a>
 </body>

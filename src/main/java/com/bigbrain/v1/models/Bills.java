@@ -11,7 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.validation.constraints.NotNull;
 
-// spring batch generate every month
+
 public class Bills {
 	
 
@@ -46,6 +46,11 @@ public class Bills {
 		return "Bills [billIDPK=" + billIDPK + ", userIDFK=" + userIDFK + ", billDate=" + billDate + ", amountDue="
 				+ amountDue + "]";
 	}
+
+	public void setBillIDPK(int billIDPK) {
+		this.billIDPK = billIDPK;
+	}
+
 	public int getBillIDPK() {
 		return billIDPK;
 	}

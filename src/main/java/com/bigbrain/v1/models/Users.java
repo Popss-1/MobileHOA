@@ -30,10 +30,6 @@ public class Users {
         return registrationDate;
     }
 
-    public void setRegistrationDate(Date registrationDate) {
-        this.registrationDate = registrationDate;
-    }
-
     public Users(String email, Date registrationDate, String firstName, String lastName, String phoneNumber, Roles role, SubscriptionStatues subscriptionStatus, Addresses address) {
         this.email = email;
         this.registrationDate = registrationDate;

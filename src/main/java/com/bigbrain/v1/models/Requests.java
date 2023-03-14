@@ -148,7 +148,7 @@ public class Requests {
 				", description='" + description + '\'' +
 				", requestDate=" + requestDate +
 				", addressIDFK=" + addressIDFK +
-				", assignedUserIDMTMFK=" + maintenanceIdFK +
+				", maintenanceIdFK=" + maintenanceIdFK +
 				", priority='" + priority + '\'' +
 				", status='" + status + '\'' +
 				", address=" + address +

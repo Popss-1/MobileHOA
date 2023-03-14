@@ -10,6 +10,7 @@ import com.google.maps.GeocodingApi;
 import com.google.maps.errors.ApiException;
 import com.google.maps.model.GeocodingResult;
 import jakarta.servlet.http.HttpSession;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -40,10 +41,10 @@ public class IncidentController {
     }
 
     //TODO delete
-    @GetMapping("/incidentform/{email}")
-    public String showIncidentForm(@PathVariable(value = "email") String email, Model model){
+    @GetMapping("/incidentform")
+    public String showIncidentForm( HttpSession httpSession, Model model){
        // System.out.println("Incident form: " + email);
-        Users user = usersRepository.findByEmail(email);
+        Users user = (Users ) httpSession.getAttribute("user");
         Incidents incident = new Incidents();
         incident.setUserIDFK(user.getUserIdPK());
         incident.setReportedByPhoneNumber(user.getPhoneNumber());
@@ -102,7 +103,6 @@ public class IncidentController {
     }
 
     @GetMapping("/user/incidents")
-    @PreAuthorize("hasRole('Homeowner')")
     public String showUserIncidents(HttpSession httpSession, Model model){
 
         Users user = (Users) httpSession.getAttribute("user");

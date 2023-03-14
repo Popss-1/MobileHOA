@@ -2,6 +2,7 @@ package com.bigbrain.v1.DAOandRepositories;
 
 import com.bigbrain.v1.models.Maintenances;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -27,6 +28,6 @@ public class MaintenanceRepository implements MaintenanceDao{
 
     @Override
     public List<Maintenances> findAll() {
-        return jdbc.queryForList("SELECT * FROM Maintenances", Maintenances.class);
+        return jdbc.query("SELECT MaintenanceIdPK, userIdFk, numberOfRequests, availability, firstName FROM Maintenances", new BeanPropertyRowMapper<>(Maintenances.class));
     }
 }

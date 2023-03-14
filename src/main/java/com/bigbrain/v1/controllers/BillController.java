@@ -28,13 +28,14 @@ public class BillController {
         List<Bills> userBills = billsRepository.findByUserID(user.getUserIdPK());
         //model.addAttribute("user", user);
         model.addAttribute("userBills", userBills);
-       // System.out.println("all user bills" + userBills);
+        System.out.println("all user bills" + userBills);
     }
 
     @GetMapping("/admin/allbills")
-    public void viewAllBills(Model model){
+    public String viewAllBills(Model model){
         List<Bills> allBills = billsRepository.findAll();
         model.addAttribute("allBills", allBills);
         System.out.println(allBills);
+        return "adminallbills";
     }
 }

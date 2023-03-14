@@ -21,10 +21,10 @@
         <tr th:each="incident : ${userIncidents}">
 
             <td th:text="${incident.incidentIDPK}"></td>
-            <td th:text="${incident.incidentCategory}"></td>
+            <td th:text="${incident.category}"></td>
             <td th:text="${incident.title}"></td>
             <td th:text="${incident.description}"></td>
-            <td th:text="${incident.incidentStatus}"></td>
+            <td th:text="${incident.status}"></td>
             <td th:text="${incident.incidentDate}"></td>
             <td>
                 <a th:href="@{/user/deleteincidents/{incidentIDPK}(incidentIDPK=${incident.incidentIDPK})}">

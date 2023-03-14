@@ -36,7 +36,6 @@ public class RequestController {
         Requests request = new Requests();
         request.setRequestUserIDFK(user.getUserIdPK());
         model.addAttribute("newRequest", request);
-        model.addAttribute("user", user);
         return "submitrequestform";
     }
 
@@ -45,6 +44,7 @@ public class RequestController {
         Users user = (Users) httpSession.getAttribute("user");
 
         Addresses address = addressRepository.findByUserID(newRequest.getRequestUserIDFK());
+
         newRequest.setAddressIDFK(address.getAddressIDPK());
         // assign maintenance
         int maintenanceAssignment = assignMaintenance();
@@ -55,18 +55,18 @@ public class RequestController {
         else{
             newRequest.setStatus(Requests.Statuses.Received.toString());
         }
+        System.out.println("NEW REQUESTS: " + newRequest.toString());
         requestRepository.save(newRequest);
-        model.addAttribute("user", user);
         return "redirect:/welcome";
     }
 
     @GetMapping("/admin/alluserrequests")
     public String showAllUserRequests(HttpSession httpSession, Model model){
         Users user = (Users) httpSession.getAttribute("user");
-        List<Requests> allUserRequests = requestRepository.findAllByUserIdFk(user.getUserIdPK());
+        List<Requests> allUserRequests = requestRepository.findAll();
        // System.out.println("allrequests: " + allUserRequests.toString());
         model.addAttribute("allUserRequests", allUserRequests);
-        model.addAttribute("user", user);
+       // model.addAttribute("user", user);
         return "allrequests";
     }
 
@@ -75,7 +75,7 @@ public class RequestController {
         Users user = (Users) httpSession.getAttribute("user");
         model.addAttribute("user", user);
         requestRepository.deleteById(requestIDPK);
-        return "forward:/admin/alluserrequests/";
+        return "redirect:/admin/alluserrequests";
     }
 
     @GetMapping("/admin/updaterequest/{requestIDPK}")
@@ -87,7 +87,7 @@ public class RequestController {
         return "requestupdateform";
     }
 
-    @PostMapping("/updaterequest")
+    @PostMapping("/admin/updaterequest")
     public String submitUpdateRequest(@ModelAttribute("requestToUpdate") Requests requestToUpdate, HttpSession httpSession,Model model){
         Users user = (Users) httpSession.getAttribute("user");
         requestRepository.update(requestToUpdate, requestToUpdate.getRequestIDPK());
@@ -97,12 +97,12 @@ public class RequestController {
 
     public int assignMaintenance(){
         List<Maintenances>allMaintenances = maintenanceRepository.findAll();
+        System.out.println(allMaintenances.toString());
         for ( Maintenances maintenance : allMaintenances){
             if ( maintenance.getAvailability().equals("Available") && maintenance.getNumberOfRequests() <= 5)
+                System.out.println("MaintenanceID: " + maintenance.getMaintenanceIdPk());
                 return maintenance.getMaintenanceIdPk();
         }
         return -1;
     }
-
-
 }

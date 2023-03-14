@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:insert="fragments/head">
+    <meta charset="UTF-8">
+    <title>All user bills</title>
+</head>
+<body>
+<div th:insert="fragments/navbar"></div>
+  <h2>List of all user bills</h2>
+<div th:if="${ not#lists.isEmpty(allBills)}">
+<table>
+  <tr>
+    <th>ID</th>
+    <th>Bill date</th>
+    <th>Amount due</th>
+  </tr>
+  <tr th:each="bill : ${allBills}">
+
+    <td th:text="${bill.billIDPK}"></td>
+    <td th:text="${bill.billDate}"></td>
+    <td th:text="${bill.amountDue}"></td>
+
+  </tr>
+</table>
+</div>
+</body>
+</html>

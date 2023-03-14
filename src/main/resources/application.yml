@@ -1,8 +1,10 @@
-#logging:
-#  level:
-#    org:
-#      springframework:
-#        security: DEBUG
+logging:
+  level:
+    org:
+      springframework:
+        security:
+        web: DEBUG
+        org:hibernate: DEBUG
 
 spring:
   security:

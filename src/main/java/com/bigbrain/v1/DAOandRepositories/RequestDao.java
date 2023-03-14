@@ -13,5 +13,6 @@ public interface RequestDao {
     int deleteById(int requestIdPK);
 
     List<Requests> findAllByUserIdFk(int requestUserIdFk);
+    List<Requests> findAll();
 
 }

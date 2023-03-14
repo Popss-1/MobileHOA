@@ -7,12 +7,12 @@
 <body>
 <div th:insert="fragments/navbar"></div>
 
-  <span>First Name: </span><a th:text="${user.firstName}" ></a>
-  <span>Last Name: </span><a th:text="${user.lastName}" ></a>
-  <span>Last Name: </span><a th:text="${user.email}" ></a>
-  <span>Subscription status: </span><a th:text="${user.subscriptionStatus}" ></a>
-  <span>Subscription expiration date: </span><a th:text="${user.subscriptionExpirationDate}" ></a>
-  <span>Phone number </span><a th:text="${user.phoneNumber}" ></a>
-  <a class="btn" th:href="@{/profile/edit/{email}(email=${user.email})}" >Edit profile</a>
+  <span>First Name: </span><a th:text="${user.firstName}" ></a><br>
+  <span>Last Name: </span><a th:text="${user.lastName}" ></a><br>
+  <span>Last Name: </span><a th:text="${user.email}" ></a><br>
+  <span>Subscription status: </span><a th:text="${user.subscriptionStatus}" ></a><br>
+  <span>Subscription expiration date: </span><a th:text="${user.subscriptionExpirationDate}" ></a><br>
+  <span>Phone number </span><a th:text="${user.phoneNumber}" ></a><br>
+  <a class="btn" th:href="@{/profile/edit}" >Edit profile</a>
 </body>
 </html>

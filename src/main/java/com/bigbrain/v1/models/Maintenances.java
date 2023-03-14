@@ -17,6 +17,10 @@ public class Maintenances {
         this.availability = availability;
     }
 
+    public void setMaintenanceIdPk(int maintenanceIdPk) {
+        this.maintenanceIdPk = maintenanceIdPk;
+    }
+
     public int getMaintenanceIdPk() {
         return maintenanceIdPk;
     }
@@ -46,11 +50,10 @@ public class Maintenances {
         return firstName;
     }
 
-
     @Override
     public String toString() {
         return "Maintenances{" +
-                "billIdPk=" + maintenanceIdPk +
+                "maintenanceIdPk=" + maintenanceIdPk +
                 ", userIdFk=" + userIdFk +
                 ", numberOfRequests=" + numberOfRequests +
                 ", availability='" + availability + '\'' +

@@ -22,7 +22,7 @@ public class AppConfig {
 				.csrf().disable()
 				.authorizeHttpRequests(authorize -> authorize
 						.requestMatchers("/", "/registration").permitAll()  // allows any request to the root URL ("/") and the registration URL ("/registration") without authentication
-						.requestMatchers("/user/**").hasAuthority("Homeowner") // only users with homeowner role
+						.requestMatchers("/user/**").hasAnyAuthority("Homeowner", "Manager") // only users with homeowner role
 						.requestMatchers("/admin/**").hasAuthority("Manager") // only users with manager role
 						.anyRequest().authenticated()
 				)

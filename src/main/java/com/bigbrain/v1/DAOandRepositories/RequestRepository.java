@@ -20,7 +20,7 @@ public class RequestRepository implements RequestDao{
 
     @Override
     public int save(Requests request) {
-        return jdbc.update("INSERT INTO Requests(requestuseridfk, title, description, priority, status, addressidfk, assigneduseridmtmfk) VALUES (?,?,?,?,?,?,?)",
+        return jdbc.update("INSERT INTO Requests(requestuseridfk, title, description, priority, status, addressidfk, maintenanceIdFK) VALUES (?,?,?,?,?,?,?)",
                 request.getRequestUserIDFK(),
                 request.getTitle(),
                 request.getDescription(),
@@ -33,7 +33,7 @@ public class RequestRepository implements RequestDao{
     @Override
     public int update(Requests request, int requestIdPK) {
         try{
-            return jdbc.update("UPDATE Requests SET title=?, Description=?, priority=?, status=?, assigneduseridmtmfk=? WHERE requestIdPK=? ",
+            return jdbc.update("UPDATE Requests SET title=?, Description=?, priority=?, status=?, maintenanceIdFK=? WHERE requestIdPK=? ",
                     request.getTitle(),
                     request.getDescription(),
                     request.getPriority(),
@@ -54,7 +54,7 @@ public class RequestRepository implements RequestDao{
     @Override
     public Requests findById(int requestIDPK){
         try{
-            return (Requests)jdbc.queryForObject("SELECT RequestIdPK, RequestUserIdFK, title, Description, priority, status, requestdate, AddressIdFK, assigneduseridmtmfk FROM Requests WHERE requestIDPK=?", new Object[]{requestIDPK},
+            return (Requests)jdbc.queryForObject("SELECT RequestIdPK, RequestUserIdFK, title, Description, priority, status, requestdate, AddressIdFK, maintenanceIdFK FROM Requests WHERE requestIDPK=?", new Object[]{requestIDPK},
                     new BeanPropertyRowMapper(Requests.class));
         }
         catch(EmptyResultDataAccessException e){
@@ -82,7 +82,7 @@ public class RequestRepository implements RequestDao{
     @Override
     public List<Requests> findAllByUserIdFk(int requestUserIdFk) {
         try{
-            return jdbc.query("SELECT RequestIdPK, RequestUserIdFK, title, Description, priority, status, requestdate, AddressIdFK, assigneduseridmtmfk FROM Requests WHERE RequestUserIdFK=?",
+            return jdbc.query("SELECT RequestIdPK, RequestUserIdFK, title, Description, priority, status, requestdate, AddressIdFK, maintenanceIdFK FROM Requests WHERE RequestUserIdFK=?",
                     new BeanPropertyRowMapper<>(Requests.class), requestUserIdFk);
         }
         catch(EmptyResultDataAccessException e){
@@ -92,5 +92,10 @@ public class RequestRepository implements RequestDao{
             System.err.println(e);
             return null;
         }
+    }
+
+    @Override
+    public List<Requests> findAll() {
+        return jdbc.query("SELECT * FROM Requests", new BeanPropertyRowMapper<>(Requests.class));
     }
 }

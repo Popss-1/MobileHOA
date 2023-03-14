@@ -11,7 +11,7 @@
 
   <div class = "row">
     <div class="col-sm-6 form-group">
-      <label >Incident status: </label> <select th:field = "*{newIncident.incidentStatus}">
+      <label >Incident status: </label> <select th:field = "*{newIncident.status}">
       <option th:each="incidentStatus : ${T(com.bigbrain.v1.models.Incidents.Statues).values() }"
                                             th:value="*{incidentStatus.toString()}"
                                             th:text="${incidentStatus}"><br/>
@@ -19,7 +19,7 @@
     </select>
 
       <label >Incident category: </label> <Input type="text"
-                                     th:field="*{newIncident.incidentCategory}"  th:required="required" class="form-control" />
+                                     th:field="*{newIncident.category}"  th:required="required" class="form-control" />
 
       <label >Title: </label> <Input type="text"
                                           th:field="*{newIncident.title}"  th:required="required" class="form-control" />
