@@ -98,4 +98,11 @@ public class RequestRepository implements RequestDao{
     public List<Requests> findAll() {
         return jdbc.query("SELECT * FROM Requests", new BeanPropertyRowMapper<>(Requests.class));
     }
+
+    @Override
+    public List<Requests> findAllByMaintenanceIdFk(int maintenanceIdFK) {
+        return jdbc.query("SELECT RequestIdPK, RequestUserIdFK, title, Description, priority, status, requestdate, AddressIdFK, maintenanceIdFK FROM Requests WHERE maintenanceIdFK=?",
+                new BeanPropertyRowMapper<>(Requests.class),
+                maintenanceIdFK);
+    }
 }

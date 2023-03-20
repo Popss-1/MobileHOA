@@ -9,4 +9,6 @@ public interface MaintenanceDao {
     int updateAvailability(int maintenanceIdPk, Maintenances maintenance);
     List<Maintenances> findAll();
 
+    int getMaintenanceIdPk(int userIdFK);
+
 }

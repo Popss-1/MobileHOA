@@ -24,6 +24,7 @@ public class AppConfig {
 						.requestMatchers("/", "/registration").permitAll()  // allows any request to the root URL ("/") and the registration URL ("/registration") without authentication
 						.requestMatchers("/user/**").hasAnyAuthority("Homeowner", "Manager") // only users with homeowner role
 						.requestMatchers("/admin/**").hasAuthority("Manager") // only users with manager role
+						.requestMatchers("/mainteenance/**").hasAnyAuthority("Maintenance")
 						.anyRequest().authenticated()
 				)
 				.oauth2Login()

@@ -14,5 +14,7 @@ public interface RequestDao {
 
     List<Requests> findAllByUserIdFk(int requestUserIdFk);
     List<Requests> findAll();
+    List<Requests> findAllByMaintenanceIdFk(int maintenanceIdFK);
+
 
 }

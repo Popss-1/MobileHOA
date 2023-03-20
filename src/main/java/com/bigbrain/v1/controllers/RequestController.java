@@ -95,6 +95,19 @@ public class RequestController {
         return "redirect:/admin/alluserrequests";
     }
 
+    @GetMapping("/maintenance/assignedrequests")
+    public void viewAllAssignedRequests(HttpSession httpSession){
+        Users user = (Users) httpSession.getAttribute("user");
+        int maintenanceIdPk = maintenanceRepository.getMaintenanceIdPk(user.getUserIdPK());
+        List<Requests> assignedRequests = requestRepository.findAllByMaintenanceIdFk(maintenanceIdPk);
+        // return assignedRequests
+    }
+
+    @PostMapping("/maintenance/assignedrequests")// receive requestToUpdate
+    public void updateRequestStatues(){
+        //requestRepository.update(requestToUpdate, requestToUpdate.getRequestIDPK());
+    }
+
     public int assignMaintenance(){
         List<Maintenances>allMaintenances = maintenanceRepository.findAll();
         System.out.println(allMaintenances.toString());
