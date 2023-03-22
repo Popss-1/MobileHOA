@@ -23,7 +23,7 @@ public class PaymentsController {
     // user finished filling payment form
     //TODO receive payments obj
     @PostMapping("/user/userbills/{billidfk}/payment")
-    public void submitPayment(@PathVariable int billidfk, HttpSession httpSession){
+        public void submitPayment(@PathVariable int billidfk, HttpSession httpSession){
         Users user = (Users) httpSession.getAttribute("user");
         //Payments payment = new Payments(billidfk, creditCardNumber, cvv, expirationMonth, expirationYear, amountPaid, user.getUserIdPK());
         //paymentRepository.save(payment);

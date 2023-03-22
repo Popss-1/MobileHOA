@@ -33,7 +33,7 @@ public class AnnouncementController {
         return "redirect:/admin/allannouncements";
     }
 
-    @GetMapping("/admin/allannouncements")
+    @GetMapping("/welcome")
     public String showAllAnnouncements(){
         List<Announcements> allAnnouncements = announcementRepository.findAll();
         return "allannouncements";

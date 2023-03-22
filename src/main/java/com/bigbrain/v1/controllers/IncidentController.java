@@ -9,6 +9,7 @@ import com.google.maps.GeoApiContext;
 import com.google.maps.GeocodingApi;
 import com.google.maps.errors.ApiException;
 import com.google.maps.model.GeocodingResult;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.io.IOException;
 import java.sql.Date;
@@ -55,7 +58,11 @@ public class IncidentController {
     }
 
     @PostMapping("/incidentform")
-    public String submitIncidentForm(@ModelAttribute("newIncident") Incidents newIncident, @ModelAttribute("incidentAddress") Addresses incidentAddress, Model model){
+    public String submitIncidentForm(HttpServletRequest request, @ModelAttribute("newIncident") Incidents newIncident, @ModelAttribute("incidentAddress") Addresses incidentAddress, Model model) throws IOException {
+      // Store image into incidents obj
+        //        MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+//        MultipartFile file = multipartRequest.getFile("image");
+//        byte[] imageData = file.getBytes();
 
         String address = incidentAddress.getAddressLine1() + " " + incidentAddress.getCity() + ", " + incidentAddress.getCity() + " " + incidentAddress.getZipCode();
 
@@ -122,7 +129,6 @@ public class IncidentController {
         return "incidentmap";
     }
 
-    //TODO when combined, return incidenttoupdate
     @GetMapping("/user/updateincident/{incidentIDPK}")
     public String updateIncident(@PathVariable int incidentIDPK, Model model, HttpSession httpSession){
         Incidents incidentToUpdate = incidentRepository.findIncidentByPK(incidentIDPK);

@@ -70,7 +70,7 @@ public class RequestController {
         return "allrequests";
     }
 
-    @GetMapping("/admin/deleterequest/{requestIDPK}")
+    @GetMapping("/deleterequest/{requestIDPK}")
     public String deleteRequest(@PathVariable int requestIDPK, Model model, HttpSession httpSession){
         Users user = (Users) httpSession.getAttribute("user");
         model.addAttribute("user", user);
@@ -78,7 +78,7 @@ public class RequestController {
         return "redirect:/admin/alluserrequests";
     }
 
-    @GetMapping("/admin/updaterequest/{requestIDPK}")
+    @GetMapping("/updaterequest/{requestIDPK}")
     public String updateRequest(@PathVariable int requestIDPK, Model model, HttpSession httpSession){
         Requests requestToUpdate = requestRepository.findById(requestIDPK);
         Users user = (Users) httpSession.getAttribute("user");
