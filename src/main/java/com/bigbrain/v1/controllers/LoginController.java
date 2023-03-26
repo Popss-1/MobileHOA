@@ -46,6 +46,7 @@ public class LoginController {
     public String postLogin(@AuthenticationPrincipal OAuth2User principal, ModelMap model, HttpSession httpSession){
         String email = principal.getAttribute("email");
         Users user = usersRepository.findByEmail(email);
+
         //System.out.println("Found user: " + user);
         // User not found, proceed with registration
         if ( user == null){
