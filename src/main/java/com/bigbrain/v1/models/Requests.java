@@ -19,7 +19,6 @@ public class Requests {
         Completed,
         Delayed
     }
-	
 
 	private int requestIDPK;
 

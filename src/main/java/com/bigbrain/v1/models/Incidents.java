@@ -9,9 +9,10 @@ public class Incidents {
        New,
        Expired,
        Resolved
-    } 
-	
+    }
 
+	// Image stored as
+	//private byte[] image;
 	private int incidentIDPK;
 
 	private String category;
@@ -30,7 +31,6 @@ public class Incidents {
 	private String title;
 
 	private Date incidentDate;
-
 
 	public Incidents(String category, String status, String description, int userIDFK, String reportedByPhoneNumber, double longitude, double latitude, String title, Date incidentDate) {
 		this.category = category;
